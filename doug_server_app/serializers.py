@@ -7,11 +7,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('username', 'email', 'last_login')
 
-class PersonSerializer(serializers.Serializer):
-    model = Person
-    class Meta:
-        abstract = True
-
 class ProfessoresSerializers(serializers.Serializer):
     class Meta:
         model = Professor
@@ -22,3 +17,16 @@ class Secretario(serializers.Serializer):
     class Meta:
         model = Secretario
         fields = ('nome', 'email')
+
+
+
+class DepartamentoSerializer(serializers.Serializer):
+    pass
+
+class SecretariaSerialzier(serializers.Serializer):
+    pass
+
+class CursoSerializer(serializers.Serializer):
+    pass
+
+

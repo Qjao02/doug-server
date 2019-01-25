@@ -3,17 +3,14 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
-class Person(models.Model):
+
+class Professor(models.Model):
     nome = models.CharField(max_length=30)
-    email = models.EmailField()
+    email = models.EmailField(default=None)
 
-class Professor(Person):
-    pass
-
-class Secretario(Person):
-    pass
-
-
+class Secretario(models.Model):
+    nome = models.CharField(max_length=30)
+    email = models.EmailField( default=None)
 
 
 class Secretaria(models.Model):
@@ -25,7 +22,7 @@ class Departamento(models.Model):
     nome = models.CharField(max_length=30)
     contato = PhoneNumberField()
     chefe_departamento = models.OneToOneField(Professor,on_delete=None)
-    corpo_docente_fk = models.ForeignKey(Professor, related_name='professores', on_delete=models.CASCADE)
+    corpo_docente = models.ForeignKey(Professor, related_name='professores', on_delete=models.CASCADE)
 
 
 class Curso(models.Model):
