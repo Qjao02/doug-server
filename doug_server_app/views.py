@@ -6,6 +6,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+
 #serializer
 
 
@@ -20,6 +22,7 @@ from rest_framework import viewsets
 
 
 class UserViewSets(viewsets.ViewSet):
+    permission_classes = (IsAuthenticated, IsAdminUser)
 
     def list(self, request):
         queryset = User.objects.all()
