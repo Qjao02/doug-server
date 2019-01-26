@@ -26,7 +26,7 @@ class UserViewSets(viewsets.ViewSet):
 
     def list(self, request):
         queryset = User.objects.all()
-        serializer = UserSerializer(queryset)
+        serializer = UserSerializer(queryset,context= {'request': request},many=True)
 
         return Response(serializer.data, status.HTTP_200_OK)
 
