@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+
 from .models import *
 
 #serializer
@@ -57,6 +59,10 @@ class ProfessoresViewSets(viewsets.ViewSet):
     create:
     create method for a new professor instance, in that case validor is called on serializer class, if data is
     valid, a new instance should be created. For invalid data request, server will return a 400 error (BAD REQUEST)
+
+    destroy:
+    Destroy method for delete a professor instance, primary key is required as a query string: example: /api/professor/2 where 2 is the id of
+    Professor that will be deleted from database.
     '''
 
 
@@ -65,12 +71,12 @@ class ProfessoresViewSets(viewsets.ViewSet):
     def list(self, request):
 
         queryset = Professor.objects.all()
-        serializer = ProfessorSerializers(queryset, many=True)
+        serializer = ProfessorSerializer(queryset, many=True)
 
         return Response(serializer.data, status.HTTP_200_OK)
 
     def create(self, request):
-        serializer = ProfessorSerializers(data=request.data)
+        serializer = ProfessorSerializer(data=request.data)
         print(serializer.is_valid())
         print(serializer.errors)
         if (serializer.is_valid()):
@@ -80,13 +86,34 @@ class ProfessoresViewSets(viewsets.ViewSet):
 
 
     def retrieve(self, request, pk=None):
-        pass
+        queryset = Professor.objects.all()
+        professor = get_object_or_404(queryset, pk=pk)
+        serializer = ProfessorSerializer(professor)
+        return Response(serializer.data, status.HTTP_302_FOUND)
+
 
     def update(self, request, pk=None):
         pass
 
-    def partial_update(self, request, pk=None):
-        pass
+    def destroy(self, request, pk):
+        queryset = Professor.objects.all()
+        professor = get_object_or_404(queryset, pk=pk)
+        professor.delete()
+        return Response('ok!', status.HTTP_200_OK)
 
-    def destroy(self, request, pk=None):
-        pass
+
+class SecretarioViewSets(viewsets.ModelViewSet):
+    queryset = Secretario.objects.all()
+    permission_classes = (IsAuthenticated, IsAdminUser)
+    serializer_class = SecretarioSerializer
+
+
+class DepartamentoViewSets(viewsets.ModelViewSet):
+    queryset =  Departamento.objects.all()
+    permission_classes = (IsAuthenticated, IsAdminUser)
+    serializer_class = DepartamentoSerializer
+
+class SecretariaViewSets(viewsets.ModelViewSet):
+    queryset = Secretaria.objects.all()
+    permission_classes = (IsAuthenticated, IsAdminUser)
+    serializer_class = SecretariaSerialzier

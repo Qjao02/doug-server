@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import  serializers
+from rest_framework.validators import UniqueTogetherValidator
+
 from .models import *
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -7,32 +9,49 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_login')
 
-class ProfessorSerializers(serializers.ModelSerializer):
+
+
+class SecretarioSerializer(serializers.ModelSerializer):
+    validators = [
+        UniqueTogetherValidator(
+            queryset= Secretario.objects.all(),
+            fields= ['email']
+        )
+    ]
+
+    class Meta:
+        model = Secretario
+        fields = "__all__"
+
+
+class ProfessorSerializer(serializers.ModelSerializer):
+    validators = [
+        UniqueTogetherValidator(
+            queryset=Professor.objects.all(),
+            fields=('email', 'lates')
+        )
+    ]
 
     class Meta:
         model = Professor
-        fields = ('nome', 'email', 'lates')
+        fields = "__all__"
 
+class DepartamentoSerializer(serializers.ModelSerializer):
 
+    chefe_departamento = ProfessorSerializer()
+    corpo_docente = ProfessorSerializer(many=True)
 
-
-class Secretario(serializers.Serializer):
-    class Meta:
-        model = Secretario
-        fields = ('nome', 'email')
-
-
-
-class DepartamentoSerializer(serializers.Serializer):
     class Meta:
         model = Departamento
-        chefe_departamento = ProfessorSerializers()
-        corpo_docente = ProfessorSerializers(many=True)
+        fields = ('nome', 'contato','chefe_departamento','corpo_docente')
 
-        fields = '__all__'
 
 class SecretariaSerialzier(serializers.Serializer):
-    pass
+    secretario = SecretarioSerializer()
+
+    class Meta:
+        object= Secretaria
+        fields= ('email', 'telefone', 'secretario')
 
 class CursoSerializer(serializers.Serializer):
     pass

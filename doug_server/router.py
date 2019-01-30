@@ -5,3 +5,6 @@ router = routers.DefaultRouter()
 
 router.register('user', UserViewSets, base_name='user')
 router.register('professor', ProfessoresViewSets, base_name='professor')
+router.register('secretario', SecretarioViewSets, base_name='secretario')
+router.register('departamento', DepartamentoViewSets, base_name='departamento')
+router.register('secretaria', SecretariaViewSets, base_name='secretaria')

@@ -7,27 +7,37 @@ from django.contrib.auth.models import User
 
 
 
-class Professor(models.Model):
-    nome = models.CharField(max_length=30)
-    email = models.EmailField()
-    lates = models.URLField()
 
-class Secretario(models.Model):
-    nome = models.CharField(max_length=30)
-    email = models.EmailField( default=None)
+
+
 
 
 class Secretaria(models.Model):
-    secretario = models.OneToOneField(to=Secretario, on_delete=models.CASCADE, primary_key=True)
     email = models.EmailField()
     telefone = PhoneNumberField()
+
+class Secretario(models.Model):
+    nome = models.CharField(max_length=30)
+    email = models.EmailField()
+    secretaria = models.OneToOneField(to=Secretaria, on_delete=models.CASCADE, related_name='secretario', null=True)
+
 
 class Departamento(models.Model):
     nome = models.CharField(max_length=30)
     contato = PhoneNumberField()
-    chefe_departamento = models.OneToOneField(Professor,on_delete=None)
-    corpo_docente = models.ForeignKey(Professor, related_name='professores', on_delete=models.CASCADE)
 
+class Professor(models.Model):
+    nome = models.CharField(max_length=30)
+    email = models.EmailField()
+    lates = models.URLField()
+    departamento = models.ForeignKey(Departamento, related_name='corpo_docente', on_delete=models.CASCADE, null= True)
+    is_chefe_departamento = models.OneToOneField(Departamento,related_name='chefe_departamento', on_delete=None, null= True)
+
+    class Meta:
+        unique_together: ['email']
+
+    def __unicode__(self):
+        return '%s: %s' % (self.nome, self.email)
 
 class Curso(models.Model):
     nome = models.CharField(max_length=60)
