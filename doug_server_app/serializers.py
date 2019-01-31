@@ -46,14 +46,37 @@ class DepartamentoSerializer(serializers.ModelSerializer):
         fields = ('nome', 'contato','chefe_departamento','corpo_docente')
 
 
-class SecretariaSerialzier(serializers.Serializer):
-    secretario = SecretarioSerializer()
+class SecretariaSerialzier(serializers.ModelSerializer):
+    secretario = SecretarioSerializer(many=True, read_only=True)
+
+    validators = [
+        UniqueTogetherValidator(
+            queryset=Secretaria.objects.all(),
+            fields=['email']
+        )
+    ]
 
     class Meta:
-        object= Secretaria
-        fields= ('email', 'telefone', 'secretario')
+        model = Secretaria
+        fields = ('email', 'telefone', 'secretario', 'curso')
 
-class CursoSerializer(serializers.Serializer):
-    pass
+
+class CursoSerializer(serializers.ModelSerializer):
+    departamento = DepartamentoSerializer(read_only=True)
+    secretaria = SecretariaSerialzier(read_only=True)
+
+    class Meta:
+        model= Curso
+        fields= ['nome', 'departamento', 'secretaria']
+
+
+
+
+
+
+
+
+
+
 
 

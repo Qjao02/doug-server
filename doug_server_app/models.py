@@ -9,22 +9,24 @@ from django.contrib.auth.models import User
 
 
 
-
+class Curso(models.Model):
+    nome = models.CharField(max_length=60)
 
 
 class Secretaria(models.Model):
     email = models.EmailField()
     telefone = PhoneNumberField()
+    curso = models.OneToOneField(to=Curso, on_delete=None, related_name= 'secretaria', null=True)
 
 class Secretario(models.Model):
     nome = models.CharField(max_length=30)
     email = models.EmailField()
-    secretaria = models.OneToOneField(to=Secretaria, on_delete=models.CASCADE, related_name='secretario', null=True)
-
+    secretaria = models.ForeignKey(to=Secretaria, on_delete=None, related_name='secretario', null=True )
 
 class Departamento(models.Model):
     nome = models.CharField(max_length=30)
     contato = PhoneNumberField()
+    curso = models.OneToOneField(to= Curso, on_delete=None, related_name="departamento", null=True)
 
 class Professor(models.Model):
     nome = models.CharField(max_length=30)
@@ -39,10 +41,7 @@ class Professor(models.Model):
     def __unicode__(self):
         return '%s: %s' % (self.nome, self.email)
 
-class Curso(models.Model):
-    nome = models.CharField(max_length=60)
-    departamento_fk = models.OneToOneField(Departamento, on_delete=None)
-    secretaria_fk = models.OneToOneField(Secretaria, on_delete=None)
+
 
 
 class Disciplinas(models.Model):

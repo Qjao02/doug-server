@@ -117,3 +117,9 @@ class SecretariaViewSets(viewsets.ModelViewSet):
     queryset = Secretaria.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
     serializer_class = SecretariaSerialzier
+
+class CursoViewSet(viewsets.ModelViewSet):
+    queryset = Curso.objects.all()
+    permission_classes = (IsAuthenticated, IsAdminUser)
+    serializer_class = CursoSerializer
+
