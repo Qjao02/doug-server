@@ -4,11 +4,12 @@ from .serializers import *
 from rest_framework import generics, status
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-import dialogflow
+import dialogflow_v2 as dialogflow
+
+import json
 
 from .models import *
 
@@ -127,12 +128,38 @@ class CursoViewSet(viewsets.ModelViewSet):
 
 
 class botViewSet(viewsets.ViewSet):
-    
+
+    permission_classes = (AllowAny,)
     def list(self, request):
         pass
 
     def create(self, request):
 
+        project_id = 'doug-bot-10f69'
+
+
+        if not request.session.exists(request.session.session_key):
+            request.session.create()
+
+        session_client = dialogflow.SessionsClient()
+        session_id = request.session.session_key
+        session = session_client.session_path(project_id, session_id)
+        print('Session path: {}\n'.format(session))
+
+        message = request.data['message']
+        print('message is {}'.format(message))
+
+        text_input = dialogflow.types.TextInput(
+            text=message, language_code='pt-BR')
+
+        query_input = dialogflow.types.QueryInput(text=text_input)
+
+        response = session_client.detect_intent(
+            session=session, query_input=query_input)
+
+        print(response)
+
+        return Response({'response': message}, status.HTTP_200_OK)
 
     def retrieve(self, request, pk=None):
         pass
