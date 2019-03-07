@@ -62,12 +62,10 @@ class SecretariaSerialzier(serializers.ModelSerializer):
 
 
 class CursoSerializer(serializers.ModelSerializer):
-    departamento = DepartamentoSerializer(read_only=True)
-    secretaria = SecretariaSerialzier(read_only=True)
 
     class Meta:
         model= Curso
-        fields= ['nome', 'departamento', 'secretaria']
+        fields= ['nome']
 
 
 

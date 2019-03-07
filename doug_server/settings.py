@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+#add Google credentials and conect to agent bot on google api services
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']= '/home/juaumpc/Dev/workspaces/poc1/doug_server/doug_server/Google_Application_credentials/key.json'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +28,10 @@ SECRET_KEY = 'y23s$0f=z_@$kt*$!no*h@26g4bgo6vi9twf74))^q&x2^1wzn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*',
+    'localhost',
+]
 
 
 # Application definition
@@ -39,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
@@ -91,7 +98,7 @@ WSGI_APPLICATION = 'doug_server.wsgi.application'
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
     'DEFAULT_AUTHENTICATION_CLASSES':('rest_framework.authentication.TokenAuthentication',),
 }
 

@@ -26,7 +26,7 @@ class Secretario(models.Model):
 class Departamento(models.Model):
     nome = models.CharField(max_length=30)
     contato = PhoneNumberField()
-    curso = models.OneToOneField(to= Curso, on_delete=None, related_name="departamento", null=True)
+    curso = models.ForeignKey(to= Curso, on_delete=None, related_name="departamento", null=True)
 
 class Professor(models.Model):
     nome = models.CharField(max_length=30)

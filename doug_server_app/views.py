@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db import connection
 from django.contrib.auth.models import User
 from .serializers import *
 from rest_framework import generics, status
@@ -8,7 +9,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 import dialogflow_v2 as dialogflow
-
+from django.http import HttpResponse
 import json
 
 from .models import *
@@ -157,9 +158,9 @@ class botViewSet(viewsets.ViewSet):
         response = session_client.detect_intent(
             session=session, query_input=query_input)
 
-        print(response)
 
-        return Response({'response': message}, status.HTTP_200_OK)
+
+        return Response({'message': response.query_result.fulfillment_text}, status.HTTP_200_OK)
 
     def retrieve(self, request, pk=None):
         pass
@@ -173,3 +174,42 @@ class botViewSet(viewsets.ViewSet):
     def destroy(self, request, pk=None):
         pass
 
+
+
+class FulfillmentViewSets(viewsets.ViewSet):
+
+    def create(self, request):
+        response_dict = []
+        query_result = request.data['queryResult']
+
+        if request:
+            with connection.cursor() as cursor:
+                for key, value in query_result['parameters'].items():
+                    query_string = "SELECT nome FROM doug_server_app_{}".format(value)
+                    cursor.execute(query_string)
+                    dict_result = dictfetchall(cursor)
+                    responseString = dictResponseToStringResponse(dict_result)
+                    response_dict = {'fulfillmentText': query_result['fulfillmentText'] + '{}'.format(responseString)}
+                    print(response_dict)
+                    print(json.dumps(response_dict,ensure_ascii=False))
+                    print({'fulfillmentText': query_result['fulfillmentText'] + '{}'.format(responseString)})
+
+            return HttpResponse(json.dumps(response_dict, ensure_ascii=False), content_type='application/json; charset=utf-8')
+
+
+
+
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+def dictResponseToStringResponse(dict_result):
+    lis = []
+    for v in dict_result:
+        for tup in v.values():
+            lis.append(', {}'.format(tup))
+    return u''.join(lis)

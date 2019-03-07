@@ -29,6 +29,7 @@ from .router import router
 urlpatterns = [
 
     #admin routes
+
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('docs/', include_docs_urls(title='dog-api-doc')),

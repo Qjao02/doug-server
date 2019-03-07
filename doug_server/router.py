@@ -3,6 +3,11 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 
+#routes for  dialogflow Fulfillment
+router.register('', FulfillmentViewSets, base_name='Fulfillment')
+
+
+#routes for Admin operations
 router.register('user', UserViewSets, base_name='user')
 router.register('professor', ProfessoresViewSets, base_name='professor')
 router.register('secretario', SecretarioViewSets, base_name='secretario')
