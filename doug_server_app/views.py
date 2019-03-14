@@ -127,7 +127,14 @@ class CursoViewSet(viewsets.ModelViewSet):
     serializer_class = CursoSerializer
 
 
+class Boletim(viewsets.ModelViewSet):
+    queryset= Boletim.objects.all()
+    permission_classes = (IsAuthenticated, IsAdminUser)
+    serializer_class= BoletimSerializer
 
+'''
+BOT VIEWS
+'''
 class botViewSet(viewsets.ViewSet):
 
     permission_classes = (AllowAny,)
@@ -181,7 +188,7 @@ class FulfillmentViewSets(viewsets.ViewSet):
     def create(self, request):
         response_dict = []
         query_result = request.data['queryResult']
-
+        print(request.data)
         if request:
             with connection.cursor() as cursor:
                 for key, value in query_result['parameters'].items():

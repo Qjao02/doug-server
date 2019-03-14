@@ -6,37 +6,60 @@ from django.contrib.auth.models import User
 
 
 
+class Entidade(models.Model):
+    nome = models.CharField(max_length=30)
 
+    class Meta:
+        abstract = True
 
-
-class Curso(models.Model):
-    nome = models.CharField(max_length=60)
-
-
-class Secretaria(models.Model):
+class Pessoa(Entidade):
     email = models.EmailField()
+
+    class Meta:
+        abstract = True
+        unique_together: ['email']
+
+
+class Setor(Entidade):
+    email = models.EmailField()
+
+    class Meta():
+        abstract = True
+        unique_together: ['email']
+
+
+
+class Documento(Entidade):
+    nome = models.CharField(max_length=40)
+    data_upload = models.DateField()
+    disponivel_em = models.URLField()
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+
+
+
+    class Meta():
+        abstract = True
+
+
+class Curso(Entidade):
+    pass
+
+
+class Secretaria(Setor):
     telefone = PhoneNumberField()
     curso = models.OneToOneField(to=Curso, on_delete=None, related_name= 'secretaria', null=True)
 
-class Secretario(models.Model):
-    nome = models.CharField(max_length=30)
-    email = models.EmailField()
+class Secretario(Pessoa):
     secretaria = models.ForeignKey(to=Secretaria, on_delete=None, related_name='secretario', null=True )
 
-class Departamento(models.Model):
-    nome = models.CharField(max_length=30)
+class Departamento(Setor):
     contato = PhoneNumberField()
     curso = models.ForeignKey(to= Curso, on_delete=None, related_name="departamento", null=True)
 
-class Professor(models.Model):
-    nome = models.CharField(max_length=30)
-    email = models.EmailField()
+class Professor(Pessoa):
     lates = models.URLField()
     departamento = models.ForeignKey(Departamento, related_name='corpo_docente', on_delete=models.CASCADE, null= True)
     is_chefe_departamento = models.OneToOneField(Departamento,related_name='chefe_departamento', on_delete=None, null= True)
-
-    class Meta:
-        unique_together: ['email']
 
     def __unicode__(self):
         return '%s: %s' % (self.nome, self.email)
@@ -44,26 +67,28 @@ class Professor(models.Model):
 
 
 
-class Disciplinas(models.Model):
-    nome = models.CharField(max_length=20)
+class Disciplinas(Entidade):
     carga_horaria = models.IntegerField()
-    calendario = models.DateField()
+    dia_da_semana = models.CharField(max_length= 300)
     semestre = models.IntegerField(choices=[(1,2)])
+    ano = models.IntegerField()
     professor_id = models.OneToOneField(Professor,on_delete=None)
 
 
-class Tutores(models.Model):
-    nome = models.CharField(max_length=30)
-    email = models.EmailField(default=None)
+class Tutores(Pessoa):
     telefone = PhoneNumberField(null=True)
     disciplina = models.OneToOneField(to=Disciplinas,on_delete=models.SET_NULL, null=True)
 
 
-class Editais(models.Model):
-    nome = models.CharField(max_length=40)
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+class Edital(Documento):
     path = models.URLField()
-    data = models.DateField()
     informacao_adicional = models.CharField(max_length=200)
 
+class Noticia(Documento):
+    titutlo = models.CharField(max_length= 200)
+    corpo = models.TextField()
 
+
+class Boletim(models.Model):
+    data_boletim = models.DateField()
+    noticias_fk = models.ForeignKey(on_delete= None, to= Noticia )
