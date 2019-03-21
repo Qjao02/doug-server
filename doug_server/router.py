@@ -8,10 +8,11 @@ router.register('', FulfillmentViewSets, base_name='Fulfillment')
 
 
 #routes for Admin operations
-router.register('user', UserViewSets, base_name='user')
-router.register('professor', ProfessoresViewSets, base_name='professor')
-router.register('secretario', SecretarioViewSets, base_name='secretario')
-router.register('departamento', DepartamentoViewSets, base_name='departamento')
-router.register('secretaria', SecretariaViewSets, base_name='secretaria')
-router.register('curso', CursoViewSet, base_name='curso')
-router.register('doug', botViewSet, base_name='doug')
+router.register('users', UserViewSets, base_name='user')
+router.register('professores', ProfessoresViewSets, base_name='professor')
+router.register('secretarios', SecretarioViewSets, base_name='secretario')
+router.register('departamentos', DepartamentoViewSets, base_name='departamento')
+router.register('secretarias', SecretariaViewSets, base_name='secretaria')
+router.register('cursos', CursoViewSets, base_name='curso')
+router.register('doug', botViewSets, base_name='doug')
+router.register('boletins', BoletimViewSets, base_name='boletim')

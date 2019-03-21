@@ -3,11 +3,12 @@ from django.db import connection
 from django.contrib.auth.models import User
 from .serializers import *
 from rest_framework import generics, status
+from rest_framework.decorators import action
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework import viewsets
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 import dialogflow_v2 as dialogflow
 from django.http import HttpResponse
 import json
@@ -22,11 +23,9 @@ from .models import *
 
 # Create your views here.
 
-
-
-
-
-
+'''
+    ADMIN AREA
+'''
 class UserViewSets(viewsets.ViewSet):
     permission_classes = (IsAuthenticated, IsAdminUser)
 
@@ -68,7 +67,6 @@ class ProfessoresViewSets(viewsets.ViewSet):
     Professor that will be deleted from database.
     '''
 
-
     permission_classes = (IsAuthenticated, IsAdminUser)
 
     def list(self, request):
@@ -104,38 +102,43 @@ class ProfessoresViewSets(viewsets.ViewSet):
         professor.delete()
         return Response('ok!', status.HTTP_200_OK)
 
-
+#realiza o CRUD de Secretario
 class SecretarioViewSets(viewsets.ModelViewSet):
     queryset = Secretario.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
     serializer_class = SecretarioSerializer
 
-
+#realiza o CRUD de Departamento
 class DepartamentoViewSets(viewsets.ModelViewSet):
     queryset =  Departamento.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
     serializer_class = DepartamentoSerializer
 
+#realiza o CRUD de Secretaria
 class SecretariaViewSets(viewsets.ModelViewSet):
     queryset = Secretaria.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
     serializer_class = SecretariaSerialzier
 
-class CursoViewSet(viewsets.ModelViewSet):
+#realiza o CRUD de Cursos
+class CursoViewSets(viewsets.ModelViewSet):
     queryset = Curso.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
     serializer_class = CursoSerializer
 
-
-class Boletim(viewsets.ModelViewSet):
+#realiza o CRUD de Boletim
+class BoletimViewSets(viewsets.ModelViewSet):
     queryset= Boletim.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
     serializer_class= BoletimSerializer
 
+
 '''
-BOT VIEWS
+    BOT AREA
 '''
-class botViewSet(viewsets.ViewSet):
+
+
+class botViewSets(viewsets.ViewSet):
 
     permission_classes = (AllowAny,)
     def list(self, request):
@@ -186,22 +189,14 @@ class botViewSet(viewsets.ViewSet):
 class FulfillmentViewSets(viewsets.ViewSet):
 
     def create(self, request):
-        response_dict = []
-        query_result = request.data['queryResult']
         print(request.data)
-        if request:
-            with connection.cursor() as cursor:
-                for key, value in query_result['parameters'].items():
-                    query_string = "SELECT nome FROM doug_server_app_{}".format(value)
-                    cursor.execute(query_string)
-                    dict_result = dictfetchall(cursor)
-                    responseString = dictResponseToStringResponse(dict_result)
-                    response_dict = {'fulfillmentText': query_result['fulfillmentText'] + '{}'.format(responseString)}
-                    print(response_dict)
-                    print(json.dumps(response_dict,ensure_ascii=False))
-                    print({'fulfillmentText': query_result['fulfillmentText'] + '{}'.format(responseString)})
+        data = request.data
 
-            return HttpResponse(json.dumps(response_dict, ensure_ascii=False), content_type='application/json; charset=utf-8')
+
+
+        return HttpResponse(json.dumps(response_dict, ensure_ascii=False), content_type='application/json; charset=utf-8')
+
+
 
 
 
@@ -220,3 +215,5 @@ def dictResponseToStringResponse(dict_result):
         for tup in v.values():
             lis.append(', {}'.format(tup))
     return u''.join(lis)
+
+

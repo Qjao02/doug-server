@@ -29,11 +29,11 @@ class Setor(Entidade):
 
 
 
-class Documento(Entidade):
-    nome = models.CharField(max_length=40)
+class Documento(models.Model):
+    titulo = models.CharField(max_length= 500, blank= True, null= True)
     data_upload = models.DateField()
     disponivel_em = models.URLField()
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
 
@@ -84,11 +84,12 @@ class Edital(Documento):
     path = models.URLField()
     informacao_adicional = models.CharField(max_length=200)
 
-class Noticia(Documento):
-    titutlo = models.CharField(max_length= 200)
-    corpo = models.TextField()
-
-
 class Boletim(models.Model):
-    data_boletim = models.DateField()
-    noticias_fk = models.ForeignKey(on_delete= None, to= Noticia )
+    data = models.DateField()
+    numero = models.IntegerField(null= True, blank= True)
+
+class Noticia(Documento):
+    corpo = models.TextField()
+    boletim_fk = models.ForeignKey(on_delete= models.SET_NULL, to= Boletim, null= True)
+
+

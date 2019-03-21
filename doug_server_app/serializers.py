@@ -67,19 +67,20 @@ class CursoSerializer(serializers.ModelSerializer):
         model= Curso
         fields= ['nome']
 
-
-
-class NoticiaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model= Noticia
-        fields= ['titulo', 'corpo']
-
 class BoletimSerializer(serializers.ModelSerializer):
-    noticia = NoticiaSerializer
 
     class Meta:
         model = Boletim
-        fields= ['numero, noticia']
+        fields= ('numero', 'data')
+
+class NoticiaSerializer(serializers.ModelSerializer):
+    boletimSerializer = BoletimSerializer()
+
+    class Meta:
+        model= Noticia
+        fields= ['titulo', 'corpo', 'boletim_fk']
+
+
 
 
 

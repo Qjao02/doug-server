@@ -4,12 +4,9 @@
     <list default="true" id="1692257b-7c98-4fb8-b068-6b9ae530face" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doug_server/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/doug_server/router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doug_server/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/doug_server/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doug_server/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/doug_server/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doug_server_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/doug_server_app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doug_server_app/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/doug_server_app/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doug_server_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/doug_server_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requeriments.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requeriments.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/doug_server_app/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="66" column="59" selection-start-line="66" selection-start-column="59" selection-end-line="66" selection-end-column="59" />
+            <state relative-caret-position="187">
+              <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -46,7 +43,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doug_server/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
+            <state relative-caret-position="360">
               <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
               <folding>
                 <element signature="e#635#667#0" expanded="true" />
@@ -58,8 +55,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doug_server_app/serializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="64" selection-start-line="64" selection-end-line="64" />
+            <state relative-caret-position="1080">
+              <caret line="76" column="42" selection-start-line="76" selection-start-column="42" selection-end-line="76" selection-end-column="42" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -70,8 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doug_server/router.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
+            <state relative-caret-position="240">
+              <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -88,11 +85,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doug_server_app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="196" column="76" selection-start-line="196" selection-start-column="76" selection-end-line="196" selection-end-column="76" />
+            <state relative-caret-position="195">
+              <caret line="130" column="35" lean-forward="true" selection-start-line="130" selection-start-column="35" selection-end-line="130" selection-end-column="35" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -115,6 +112,12 @@
       <find>candle_server</find>
       <find>auth</find>
       <find>permissio</find>
+      <find>i</find>
+      <find>email</find>
+      <find>curs</find>
+      <find>Documento</find>
+      <find>nome</find>
+      <find>date</find>
     </findStrings>
     <dirStrings>
       <dir>I:\Dev\Workspaces\workspace\poc1\candle_server\candle-env\doug_server</dir>
@@ -135,12 +138,12 @@
         <option value="$PROJECT_DIR$/candle_server/urls.py" />
         <option value="$PROJECT_DIR$/candle_server/wsgi.py" />
         <option value="$PROJECT_DIR$/candle_server/settings.py" />
-        <option value="$PROJECT_DIR$/doug_server_app/models.py" />
-        <option value="$PROJECT_DIR$/doug_server_app/serializers.py" />
         <option value="$PROJECT_DIR$/doug_server/urls.py" />
-        <option value="$PROJECT_DIR$/doug_server/router.py" />
         <option value="$PROJECT_DIR$/doug_server/settings.py" />
+        <option value="$PROJECT_DIR$/doug_server/router.py" />
+        <option value="$PROJECT_DIR$/doug_server_app/serializers.py" />
         <option value="$PROJECT_DIR$/doug_server_app/views.py" />
+        <option value="$PROJECT_DIR$/doug_server_app/models.py" />
       </list>
     </option>
   </component>
@@ -155,35 +158,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="doug_server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="doug_server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="doug_server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="doug_server" type="462c0819:PsiDirectoryNode" />
-              <item name="doug_server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="doug_server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="doug_server" type="462c0819:PsiDirectoryNode" />
-              <item name="doug_server_app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="doug_server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="doug_server" type="462c0819:PsiDirectoryNode" />
-              <item name="Google_Application_credentials" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -276,17 +251,31 @@
       <workItem from="1550838222536" duration="2810000" />
       <workItem from="1551890563117" duration="15189000" />
       <workItem from="1551955945395" duration="9902000" />
+      <workItem from="1551990490261" duration="46000" />
+      <workItem from="1552321868947" duration="1611000" />
+      <workItem from="1552396850313" duration="5232000" />
+      <workItem from="1552524912253" duration="345000" />
+      <workItem from="1552572568661" duration="750000" />
+      <workItem from="1552582273450" duration="1656000" />
+      <workItem from="1552697562712" duration="601000" />
+      <workItem from="1552925202115" duration="22000" />
+      <workItem from="1552937808653" duration="48000" />
+      <workItem from="1553022925351" duration="1622000" />
+      <workItem from="1553046215819" duration="781000" />
+      <workItem from="1553090218902" duration="10828000" />
+      <workItem from="1553111609492" duration="13000" />
+      <workItem from="1553130276009" duration="708000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125292000" />
+    <option name="totallyTimeSpent" value="149555000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="32" width="1366" height="736" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.25644916" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.26555386" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -310,7 +299,7 @@
       <window_info anchor="right" id="SciView" order="4" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30927053" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26555386" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -352,37 +341,10 @@
     <entry file="file://$PROJECT_DIR$/Google_Application_credentials/key.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/doug_server_app/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="66" column="59" selection-start-line="66" selection-start-column="59" selection-end-line="66" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/requeriments.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="482">
           <caret line="55" selection-start-line="55" selection-end-line="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/doug_server_app/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="32" selection-start-column="24" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/doug_server/router.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -395,7 +357,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/doug_server/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
+        <state relative-caret-position="360">
           <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
           <folding>
             <element signature="e#635#667#0" expanded="true" />
@@ -405,20 +367,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/doug_server_app/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="64" selection-start-line="64" selection-end-line="64" />
+        <state relative-caret-position="1080">
+          <caret line="76" column="42" selection-start-line="76" selection-start-column="42" selection-end-line="76" selection-end-column="42" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/doug_server_app/views.py">
+    <entry file="file://$PROJECT_DIR$/doug_server/router.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="196" column="76" selection-start-line="196" selection-start-column="76" selection-end-line="196" selection-end-column="76" />
+        <state relative-caret-position="240">
+          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doug_server_app/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="32" selection-start-column="24" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doug_server_app/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="130" column="35" lean-forward="true" selection-start-line="130" selection-start-column="35" selection-end-line="130" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doug_server_app/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
