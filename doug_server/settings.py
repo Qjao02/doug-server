@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 #add Google credentials and conect to agent bot on google api services
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']= '/home/juaumpc/Dev/workspaces/poc1/doug_server/doug_server/Google_Application_credentials/key.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']= '../GOOGLE_APPLICATION_CREDENTIALS/key.json'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -106,8 +106,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'doug_db',
-        'USER': 'juaumpc',
-        'PASSWORD': 'root',
+        'USER': 'root',
+        'PASSWORD': '@.SenhaDoDb1..',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': 3306,
     }

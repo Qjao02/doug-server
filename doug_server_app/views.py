@@ -1,6 +1,13 @@
+#django imports
 from django.shortcuts import render
 from django.db import connection
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, redirect
+import dialogflow_v2 as dialogflow
+from django.http import HttpResponse
+from .models import *
+
+#rest API imports
 from .serializers import *
 from rest_framework import generics, status
 from rest_framework.decorators import action
@@ -8,13 +15,11 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework import viewsets
-from django.shortcuts import get_object_or_404, redirect
-import dialogflow_v2 as dialogflow
-from django.http import HttpResponse
+
+#other imports
 import json
-
-from .models import *
-
+from datetime import  datetime
+from pydialogflow_fulfillment import DialogflowResponse, DialogflowRequest, SimpleResponse, Suggestions
 #serializer
 
 
@@ -133,6 +138,7 @@ class BoletimViewSets(viewsets.ModelViewSet):
     serializer_class= BoletimSerializer
 
 
+
 '''
     BOT AREA
 '''
@@ -186,16 +192,85 @@ class botViewSets(viewsets.ViewSet):
 
 
 
+
+class Behavior():
+    response = ''
+    
+    def toDo(self, parameters):
+        pass
+
+    def getResponse(self):
+        return self.response
+        
+
+class ReportBehavior(Behavior):
+    def toDo(self, parameters):
+        #procura por um boletim  com o parametro informado 
+        
+        date = datetime.strptime(parameters['date'].split('T')[0],"%Y-%m-%d")
+        boletim = Boletim.objects.filter(data= date.date())
+        print(boletim)   
+        
+        #verifica se algum boletim foi encontrado
+        if (boletim.exists()):
+            #inicia a string de resposta          
+            response = '' 
+
+            #inicia o serializer
+            serializer = ''            
+            if(len(boletim) > 1):   
+                serializer = BoletimSerializer(boletim, many= True)         
+                response =  'encontrei, ' + str(len(boletim))
+            else:
+                serializer = BoletimSerializer(boletim)
+                response = 'encontrei este boletim'
+        
+            self.response = 'Olha só o que eu' + response
+        else:
+            self.response = 'Desculpa mas eu não consegui encontrar nada nesta data'
+
+           
+
+class BehaviorFactory:
+    def getBeahavior(self): pass
+
+class ReportBehaviorFactory(BehaviorFactory):
+    
+    def getBeahavior(self):
+        return ReportBehavior()
+
+    
+
 class FulfillmentViewSets(viewsets.ViewSet):
 
     def create(self, request):
-        print(request.data)
         data = request.data
+        queryResult = data['queryResult']
+        usersIntent = queryResult['intent']['displayName']
+        usersAction = queryResult['action']
+        parameters = queryResult['parameters']
+        
+        print(usersIntent)
+        print(usersAction)
+        print(parameters)
 
+        if(usersIntent == 'boletins'):
+            factory = ReportBehaviorFactory()
 
+        behavior = factory.getBeahavior()
 
-        return HttpResponse(json.dumps(response_dict, ensure_ascii=False), content_type='application/json; charset=utf-8')
+        behavior.toDo(parameters)
+        print(behavior.getResponse())
 
+        dialogflow_response = DialogflowResponse(behavior.response)
+        return HttpResponse(dialogflow_response.get_final_response(), content_type='application/json; charset=utf-8')
+        
+
+        
+
+        
+
+            
 
 
 
@@ -215,5 +290,8 @@ def dictResponseToStringResponse(dict_result):
         for tup in v.values():
             lis.append(', {}'.format(tup))
     return u''.join(lis)
+
+
+
 
 
