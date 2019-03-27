@@ -219,11 +219,12 @@ class ReportBehavior(Behavior):
             #inicia o serializer
             serializer = ''            
             if(len(boletim) > 1):   
-                serializer = BoletimSerializer(boletim, many= True)         
-                response =  'encontrei, ' + str(len(boletim))
+                serializer = BoletimSerializer(data= boletim, many= True)         
+                response =  'encontrei, ' + serializer.data
             else:
-                serializer = BoletimSerializer(boletim)
-                response = 'encontrei este boletim'
+                serializer = BoletimSerializer(boletim, many= True)
+                print(serializer.data)
+                response = 'encontrei o boletim de numero  ' +  str(serializer.data[0]['numero']) 
         
             self.response = 'Olha só o que eu' + response
         else:
