@@ -74,7 +74,6 @@ class BoletimSerializer(serializers.ModelSerializer):
         fields= ('data', 'numero')
 
 class NoticiaSerializer(serializers.ModelSerializer):
-    boletimSerializer = BoletimSerializer()
 
     class Meta:
         model= Noticia

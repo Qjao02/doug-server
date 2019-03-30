@@ -191,12 +191,12 @@ class botViewSets(viewsets.ViewSet):
         pass
 
 
-
+##WEBHOOK
 
 class Behavior():
     response = ''
     
-    def toDo(self, parameters):
+    def toDo(self, parameters, dialogflow_request):
         pass
 
     def getResponse(self):
@@ -204,47 +204,117 @@ class Behavior():
         
 
 class ReportBehavior(Behavior):
-    def toDo(self, parameters):
-        #procura por um boletim  com o parametro informado 
-        
+    def toDo(self, parameters, dialogflow_request):
+        #search boletim with the date paramn from request
         date = datetime.strptime(parameters['date'].split('T')[0],"%Y-%m-%d")
         boletim = Boletim.objects.filter(data= date.date())
-        print(boletim)   
-        
+
         #verifica se algum boletim foi encontrado
         if (boletim.exists()):
-            #inicia a string de resposta          
-            response = '' 
+            #init of string response
+            response = ''
 
             #inicia o serializer
             serializer = ''            
-            if(len(boletim) > 1):   
+
+            if(len(boletim) > 1):
                 serializer = BoletimSerializer(data= boletim, many= True)         
                 response =  'encontrei, ' + serializer.data
             else:
+                # build the chatbot answer based on boletim number
                 serializer = BoletimSerializer(boletim, many= True)
-                print(serializer.data)
-                response = 'encontrei o boletim de numero  ' +  str(serializer.data[0]['numero']) 
-        
-            self.response = 'Olha só o que eu' + response
-        else:
-            self.response = 'Desculpa mas eu não consegui encontrar nada nesta data'
 
-           
+                #create response for user
+                response1 = 'encontrei: o boletim de numero  ' +  str(serializer.data[0]['numero']) + 'você quer ver as noticias ?'
+                response = DialogflowResponse(response1)
+
+                #setting-up the webhook response
+                response.dialogflow_response['outputContexts'] = [
+                    {
+                        'name': '{}/contexts/boletins-followup'.format(dialogflow_request.get_session()),
+                        'parameters': {
+                            'numero': serializer.data[0]['numero']
+                        },
+                        'lifespanCount': 5
+                    }
+                ]
+
+        else:
+            #if the boletim doesn't exists then the default answer is returned
+            response = DialogflowResponse('Desculpa mas eu não consegui encontrar nada nesta data =(')
+
+        #set the response attribute on behavior class
+        self.response = response
+
+class ReportBehaviorNews(Behavior):
+    def toDo(self, parameters, dialogflow_request):
+        #geting  output context parameters
+        boletim_numero = dialogflow_request.request_data['queryResult']['outputContexts'][0]['parameters']['numero']
+        
+        #search for any boletim that contains the id from request
+        boletim_id = Boletim.objects.filter(numero= boletim_numero).values_list('id')
+
+        #debugprint
+        print('\n\n boletim id founded when i try to recover news with that id:\n\n')
+        print('--------------------------')
+        print(boletim_id[0])
+        print('--------------------------')
+
+        #search for any news that match with boletim id
+        querySet = Noticia.objects.filter(boletim_fk= boletim_id[0][0])
+        serializer = NoticiaSerializer(querySet, many= True)
+        print(serializer.data)
+        response = self.formatNewsResponse(serializer.data)
+
+        self.response = DialogflowResponse(response)
+
+
+
+    def formatNewsResponse(self, news):
+        response = ''
+        for new in news:
+            response += ' ' + new['titulo'] + '\n'
+            response += ' ' + new['corpo'] + '\n\n'
+
+        return response
+ 
+
+    def getResponse(self):
+        return self.response
 
 class BehaviorFactory:
     def getBeahavior(self): pass
 
 class ReportBehaviorFactory(BehaviorFactory):
-    
-    def getBeahavior(self):
+
+    def getReportBeahavior(self):
+        print('\n\n Report behavior was called, trying to find the boletim ----- \n\n')
         return ReportBehavior()
+
+    def getReportBehaviorNews(self):
+        return ReportBehaviorNews()
+
+
+class Factory:
+
+    @staticmethod
+    def getBehavior(usersIntent):
+        if (usersIntent == 'boletins'):
+            object = ReportBehaviorFactory().getReportBeahavior()
+
+        elif(usersIntent == 'boletins - yes'):
+            object = ReportBehaviorFactory().getReportBehaviorNews()
+
+        return object
+
+
 
     
 
 class FulfillmentViewSets(viewsets.ViewSet):
 
     def create(self, request):
+        dialogflow_request = DialogflowRequest(json.dumps(request.data))
         data = request.data
         queryResult = data['queryResult']
         usersIntent = queryResult['intent']['displayName']
@@ -255,16 +325,19 @@ class FulfillmentViewSets(viewsets.ViewSet):
         print(usersAction)
         print(parameters)
 
-        if(usersIntent == 'boletins'):
-            factory = ReportBehaviorFactory()
 
-        behavior = factory.getBeahavior()
-
-        behavior.toDo(parameters)
+        behavior = Factory.getBehavior(usersIntent)
+        behavior.toDo(parameters, dialogflow_request)
+        behavior.response.response_payload = {
+            'slack': {
+                'text': behavior.response.dialogflow_response['fulfillmentText']
+            }
+        }
         print(behavior.getResponse())
 
-        dialogflow_response = DialogflowResponse(behavior.response)
-        return HttpResponse(dialogflow_response.get_final_response(), content_type='application/json; charset=utf-8')
+
+
+        return HttpResponse(behavior.getResponse().get_final_response(), content_type='application/json; charset=utf-8')
         
 
         
@@ -277,20 +350,7 @@ class FulfillmentViewSets(viewsets.ViewSet):
 
 
 
-def dictfetchall(cursor):
-    "Return all rows from a cursor as a dict"
-    columns = [col[0] for col in cursor.description]
-    return [
-        dict(zip(columns, row))
-        for row in cursor.fetchall()
-    ]
 
-def dictResponseToStringResponse(dict_result):
-    lis = []
-    for v in dict_result:
-        for tup in v.values():
-            lis.append(', {}'.format(tup))
-    return u''.join(lis)
 
 
 
