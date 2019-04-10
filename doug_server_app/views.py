@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
 import dialogflow_v2 as dialogflow
 from django.http import HttpResponse
+from django.db import connection
 from .models import *
+from .inverted_index import InvertedIndex
 
 #rest API imports
 from .serializers import *
@@ -20,7 +22,12 @@ from rest_framework import viewsets
 import json
 from datetime import  datetime
 from pydialogflow_fulfillment import DialogflowResponse, DialogflowRequest, SimpleResponse, Suggestions
-#serializer
+
+
+#ml imports
+import pickle
+
+
 
 
 
@@ -75,7 +82,6 @@ class ProfessoresViewSets(viewsets.ViewSet):
     permission_classes = (IsAuthenticated, IsAdminUser)
 
     def list(self, request):
-
         queryset = Professor.objects.all()
         serializer = ProfessorSerializer(queryset, many=True)
 
@@ -145,15 +151,12 @@ class BoletimViewSets(viewsets.ModelViewSet):
 
 
 class botViewSets(viewsets.ViewSet):
-
     permission_classes = (AllowAny,)
     def list(self, request):
         pass
 
     def create(self, request):
-
         project_id = 'doug-bot-10f69'
-
 
         if not request.session.exists(request.session.session_key):
             request.session.create()
@@ -175,21 +178,7 @@ class botViewSets(viewsets.ViewSet):
             session=session, query_input=query_input)
 
 
-
         return Response({'message': response.query_result.fulfillment_text}, status.HTTP_200_OK)
-
-    def retrieve(self, request, pk=None):
-        pass
-
-    def update(self, request, pk=None):
-        pass
-
-    def partial_update(self, request, pk=None):
-        pass
-
-    def destroy(self, request, pk=None):
-        pass
-
 
 ##WEBHOOK
 
@@ -209,13 +198,19 @@ class ReportBehavior(Behavior):
         date = datetime.strptime(parameters['date'].split('T')[0],"%Y-%m-%d")
         boletim = Boletim.objects.filter(data= date.date())
 
+
         #verifica se algum boletim foi encontrado
         if (boletim.exists()):
             #init of string response
             response = ''
 
             #inicia o serializer
-            serializer = ''            
+            serializer = ''
+            boletim_id = boletim.values_list('id')
+
+            # getting news to recover url from "boeltim"
+            querySet = Noticia.objects.filter(boletim_fk=boletim_id[0])
+            noticiaSerializer = NoticiaSerializer(querySet, many=True)
 
             if(len(boletim) > 1):
                 serializer = BoletimSerializer(data= boletim, many= True)         
@@ -225,7 +220,7 @@ class ReportBehavior(Behavior):
                 serializer = BoletimSerializer(boletim, many= True)
 
                 #create response for user
-                response1 = 'encontrei: o boletim de numero  ' +  str(serializer.data[0]['numero']) + 'você quer ver as noticias ?'
+                response1 = 'encontrei o boletim de numero {}, e ele está disponivel em {} você quer ver as noticias ?'.format(str(serializer.data[0]['numero']), str(noticiaSerializer.data[0]['disponivel_em']))
                 response = DialogflowResponse(response1)
 
                 #setting-up the webhook response
@@ -254,12 +249,6 @@ class ReportBehaviorNews(Behavior):
         #search for any boletim that contains the id from request
         boletim_id = Boletim.objects.filter(numero= boletim_numero).values_list('id')
 
-        #debugprint
-        print('\n\n boletim id founded when i try to recover news with that id:\n\n')
-        print('--------------------------')
-        print(boletim_id[0])
-        print('--------------------------')
-
         #search for any news that match with boletim id
         querySet = Noticia.objects.filter(boletim_fk= boletim_id[0][0])
         serializer = NoticiaSerializer(querySet, many= True)
@@ -268,8 +257,6 @@ class ReportBehaviorNews(Behavior):
 
         self.response = DialogflowResponse(response)
 
-
-
     def formatNewsResponse(self, news):
         response = ''
         for new in news:
@@ -277,22 +264,73 @@ class ReportBehaviorNews(Behavior):
             response += ' ' + new['corpo'] + '\n\n'
 
         return response
- 
 
-    def getResponse(self):
-        return self.response
+class NewsBehavior(Behavior):
+
+    def toDo(self, parameters, dialogflow_request):
+        urls = []
+        inverted_index = InvertedIndex.getIndex()
+        for param in parameters['palavra-chave']:
+            urls.append(inverted_index.lookup(param))
+
+        if urls:
+            urls = list(set(urls[0]).intersection(*urls))
+            urls.sort(reverse= True)
+            response =  self.formatNewsResponse(urls)
+
+        self.response = DialogflowResponse(response)
+
+    def formatNewsResponse(self, urls):
+        if not urls:
+            return 'Não encontrei nenhuma noticia ou boletim com essas palavras, você pode tentar uma nova combinação'
+
+        noticias = []
+        boletins = []
+
+        noticias = urls
+        for i, url in enumerate(urls):
+            if url.find('boletim') > 0:
+                noticias = urls[:i]
+                boletins = urls[i:]
+                break
+
+
+
+        response = ''
+        if not noticias:
+            response += 'Não achei nenhuma noticia com essas palavras  =( \n\n'
+        else:
+            response += 'as noticias encontradas foram:\n\n '
+
+            for noticia in noticias[:5]:
+                response += noticia + '\n\n'
+        if not boletins:
+
+            response += 'Não achei nenhum Boletim com essas palavras =( \n\n'
+        else:
+            response += '\n E os boletins achados foram:\n\n '
+            for boletim in boletins[:5]:
+                response += boletim + '\n\n'
+
+
+        return response
+
+
+
 
 class BehaviorFactory:
     def getBeahavior(self): pass
 
-class ReportBehaviorFactory(BehaviorFactory):
+class BehaviorFactory(BehaviorFactory):
 
     def getReportBeahavior(self):
-        print('\n\n Report behavior was called, trying to find the boletim ----- \n\n')
         return ReportBehavior()
 
     def getReportBehaviorNews(self):
         return ReportBehaviorNews()
+
+    def getNewsBehavior(self):
+        return NewsBehavior()
 
 
 class Factory:
@@ -300,10 +338,13 @@ class Factory:
     @staticmethod
     def getBehavior(usersIntent):
         if (usersIntent == 'boletins'):
-            object = ReportBehaviorFactory().getReportBeahavior()
+            object = BehaviorFactory().getReportBeahavior()
 
         elif(usersIntent == 'boletins - yes'):
-            object = ReportBehaviorFactory().getReportBehaviorNews()
+            object = BehaviorFactory().getReportBehaviorNews()
+
+        elif(usersIntent == 'noticia'):
+            object = BehaviorFactory().getNewsBehavior()
 
         return object
 
@@ -318,11 +359,9 @@ class FulfillmentViewSets(viewsets.ViewSet):
         data = request.data
         queryResult = data['queryResult']
         usersIntent = queryResult['intent']['displayName']
-        usersAction = queryResult['action']
         parameters = queryResult['parameters']
         
         print(usersIntent)
-        print(usersAction)
         print(parameters)
 
 
@@ -335,24 +374,6 @@ class FulfillmentViewSets(viewsets.ViewSet):
         }
         print(behavior.getResponse())
 
-
-
         return HttpResponse(behavior.getResponse().get_final_response(), content_type='application/json; charset=utf-8')
-        
-
-        
-
-        
-
-            
-
-
-
-
-
-
-
-
-
 
 

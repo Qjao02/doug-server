@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+from doug_server_app.inverted_index import Index
 
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'doug_server.settings')

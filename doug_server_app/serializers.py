@@ -77,7 +77,7 @@ class NoticiaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model= Noticia
-        fields= ['titulo', 'corpo', 'boletim_fk']
+        fields= ['titulo', 'corpo', 'boletim_fk', 'disponivel_em']
 
 
 
