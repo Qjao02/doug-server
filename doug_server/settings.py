@@ -103,12 +103,12 @@ REST_FRAMEWORK = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'doug_db',
-        'USER': 'root',
+        'USER': 'postgres',
         'PASSWORD': '@.SenhaDoDb1..',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': 3306,
+        'PORT': 5432,
     }
 }
 
