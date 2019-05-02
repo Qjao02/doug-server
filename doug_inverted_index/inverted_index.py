@@ -1,3 +1,4 @@
+import sys
 import pickle
 import unidecode
 
@@ -46,9 +47,6 @@ class Index:
         self.documents[self.__unique_id] = document_url
         self.__unique_id += 1
 
-
-
-
 class InvertedIndex():
     @staticmethod
     def getIndex():
@@ -56,3 +54,16 @@ class InvertedIndex():
         obj = pickle.load(file)
         return obj
 
+if __name__ == "__main__":
+    urls = []
+    args = sys.argv[1:]
+
+    obj = InvertedIndex.getIndex()
+
+    for param in args:
+        urls.append(obj.lookup(param))
+
+    if urls:
+        urls = list(set(urls[0]).intersection(*urls))
+        urls.sort(reverse= True)
+        print({"urls" : urls}, end="")

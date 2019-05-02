@@ -7,7 +7,6 @@ import dialogflow_v2 as dialogflow
 from django.http import HttpResponse
 from django.db import connection
 from .models import *
-from .inverted_index import InvertedIndex
 
 #rest API imports
 from .serializers import *
@@ -20,6 +19,7 @@ from rest_framework import viewsets
 
 #other imports
 import json
+import requests
 from datetime import  datetime
 from pydialogflow_fulfillment import DialogflowResponse, DialogflowRequest, SimpleResponse, Suggestions
 
@@ -268,15 +268,13 @@ class ReportBehaviorNews(Behavior):
 class NewsBehavior(Behavior):
 
     def toDo(self, parameters, dialogflow_request):
-        urls = []
-        inverted_index = InvertedIndex.getIndex()
+        url_req = "http://localhost:5000/?"
         for param in parameters['palavra-chave']:
-            urls.append(inverted_index.lookup(param))
+            url_req += param + "&"
 
-        if urls:
-            urls = list(set(urls[0]).intersection(*urls))
-            urls.sort(reverse= True)
-            response =  self.formatNewsResponse(urls)
+        r = requests.get(url_req[0:-1])
+        urls = json.loads(r.content.decode("utf-8").replace("'", '"')["urls"])
+        response =  self.formatNewsResponse(urls)
 
         self.response = DialogflowResponse(response)
 
