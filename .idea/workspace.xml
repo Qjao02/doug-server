@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="1692257b-7c98-4fb8-b068-6b9ae530face" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="1692257b-7c98-4fb8-b068-6b9ae530face" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/candle_server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/candle_server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+>>>>>>> Stashed changes
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +20,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< Updated upstream
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doug_server_app/models.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -30,6 +38,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="501">
               <caret line="108" column="35" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/doug_server/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="478">
+              <caret line="116" column="23" selection-start-line="116" selection-start-column="23" selection-end-line="116" selection-end-column="23" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -37,7 +52,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doug_server/urls.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="384">
+=======
+            <state relative-caret-position="552">
+>>>>>>> Stashed changes
               <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
               <folding>
                 <element signature="e#635#667#0" expanded="true" />
@@ -49,8 +68,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doug_server_app/serializers.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="1152">
               <caret line="76" selection-start-line="76" selection-end-line="76" />
+=======
+            <state relative-caret-position="1265">
+              <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -61,8 +85,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doug_server/router.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="256">
               <caret line="17" selection-start-line="17" selection-end-line="17" />
+=======
+            <state relative-caret-position="414">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -82,8 +111,49 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doug_server_app/views.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="1664">
               <caret line="130" column="35" selection-start-line="130" selection-start-column="35" selection-end-line="130" selection-end-column="35" />
+=======
+            <state relative-caret-position="6348">
+              <caret line="302" column="55" selection-start-line="302" selection-start-column="55" selection-end-line="302" selection-end-column="55" />
+              <folding>
+                <element signature="e#16#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manage.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="23">
+              <caret line="3" column="48" selection-start-line="3" selection-start-column="48" selection-end-line="3" selection-end-column="48" />
+              <folding>
+                <element signature="e#22#31#0" expanded="true" />
+              </folding>
+>>>>>>> Stashed changes
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/doug_server_app/inverted_index.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2093">
+              <caret line="91" column="5" selection-start-line="91" selection-start-column="5" selection-end-line="91" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -109,6 +179,17 @@
       <find>Documento</find>
       <find>nome</find>
       <find>date</find>
+      <find>response_dic</find>
+      <find>redirect</find>
+      <find>post</find>
+      <find>okay</find>
+      <find>action</find>
+      <find>newsb</find>
+      <find>root</find>
+      <find>index</find>
+      <find>Index</find>
+      <find>print</find>
+      <find>word</find>
     </findStrings>
     <dirStrings>
       <dir>I:\Dev\Workspaces\workspace\poc1\candle_server\candle-env\doug_server</dir>
@@ -125,16 +206,26 @@
         <option value="$PROJECT_DIR$/candle_server/router.py" />
         <option value="$PROJECT_DIR$/candle_server_app/views.py" />
         <option value="$PROJECT_DIR$/candle_server_app/models.py" />
-        <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/candle_server/urls.py" />
         <option value="$PROJECT_DIR$/candle_server/wsgi.py" />
         <option value="$PROJECT_DIR$/candle_server/settings.py" />
         <option value="$PROJECT_DIR$/doug_server/urls.py" />
+<<<<<<< Updated upstream
+=======
+        <option value="$PROJECT_DIR$/doug_server_app/models.py" />
+>>>>>>> Stashed changes
         <option value="$PROJECT_DIR$/doug_server/router.py" />
         <option value="$PROJECT_DIR$/doug_server_app/serializers.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/doug_server/settings.py" />
+        <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/doug_server_app/views.py" />
+<<<<<<< Updated upstream
         <option value="$PROJECT_DIR$/doug_server_app/models.py" />
         <option value="$PROJECT_DIR$/doug_server/settings.py" />
+=======
+        <option value="$PROJECT_DIR$/doug_server_app/inverted_index.py" />
+>>>>>>> Stashed changes
       </list>
     </option>
   </component>
@@ -149,18 +240,45 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="doug_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="doug_server" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="doug_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="doug_server" type="462c0819:PsiDirectoryNode" />
+              <item name="doug_server" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="doug_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="doug_server" type="462c0819:PsiDirectoryNode" />
+              <item name="doug_server_app" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Dev\workspaces\poc1\doug_server\doug_server\doug_server_app" />
       <recent name="I:\Dev\Workspaces\workspace\poc1\candle_server\candle-env\candle_server" />
     </key>
   </component>
@@ -177,6 +295,28 @@
     </option>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="candle_server" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="candle_server" type="Python.DjangoServer" factoryName="Django server">
       <module name="candle_server" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -257,17 +397,41 @@
       <workItem from="1553090218902" duration="10828000" />
       <workItem from="1553111609492" duration="13000" />
       <workItem from="1553130276009" duration="708000" />
+      <workItem from="1553176524345" duration="45000" />
+      <workItem from="1553207902696" duration="7680000" />
+      <workItem from="1553264631682" duration="5000" />
+      <workItem from="1553345193823" duration="907000" />
+      <workItem from="1553694237953" duration="10605000" />
+      <workItem from="1553780929603" duration="5364000" />
+      <workItem from="1553796330633" duration="162000" />
+      <workItem from="1553892134081" duration="1268000" />
+      <workItem from="1553948407310" duration="19000" />
+      <workItem from="1553949867589" duration="4290000" />
+      <workItem from="1554149482478" duration="62000" />
+      <workItem from="1554317944853" duration="7482000" />
+      <workItem from="1554410111952" duration="10745000" />
+      <workItem from="1554427212515" duration="2753000" />
+      <workItem from="1554518858410" duration="2867000" />
+      <workItem from="1554570000717" duration="7448000" />
+      <workItem from="1556122254926" duration="616000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="150764000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="35" width="1600" height="830" extended-state="6" />
+=======
+    <option name="totallyTimeSpent" value="211873000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+>>>>>>> Stashed changes
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.26555386" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.29674488" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -278,17 +442,18 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3289689" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="manage.py@candle_server" order="10" weight="0.3289689" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.3289689" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32820514" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.3289689" />
-      <window_info anchor="bottom" id="Python Console" order="13" weight="0.3289689" />
+      <window_info anchor="bottom" id="Python Console" order="13" weight="0.32820514" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="4" />
+      <window_info anchor="right" x="0" y="0" width="295" height="544" id="Documentation" order="5" side_tool="true" weight="0.3290469" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26555386" />
@@ -323,6 +488,7 @@
     <entry file="file://$PROJECT_DIR$/candle_server/urls.py" />
     <entry file="file://$PROJECT_DIR$/candle_server/wsgi.py" />
     <entry file="file://$PROJECT_DIR$/candle_server/settings.py" />
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -336,12 +502,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="501">
           <caret line="108" column="35" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
+=======
+    <entry file="file://$PROJECT_DIR$/Google_Application_credentials/key.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requeriments.txt" />
+    <entry file="file://$PROJECT_DIR$/doug_server_app/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doug_server_app/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="35" column="60" selection-start-line="35" selection-start-column="60" selection-end-line="35" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/doug_server/urls.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="384">
+=======
+        <state relative-caret-position="552">
+>>>>>>> Stashed changes
           <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
           <folding>
             <element signature="e#635#667#0" expanded="true" />
@@ -351,8 +537,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/doug_server_app/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="1152">
           <caret line="76" selection-start-line="76" selection-end-line="76" />
+=======
+        <state relative-caret-position="1265">
+          <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
@@ -361,8 +552,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/doug_server/router.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="256">
           <caret line="17" selection-start-line="17" selection-end-line="17" />
+=======
+        <state relative-caret-position="414">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -378,18 +574,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/doug_server_app/views.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="1664">
           <caret line="130" column="35" selection-start-line="130" selection-start-column="35" selection-end-line="130" selection-end-column="35" />
+=======
+        <state relative-caret-position="6348">
+          <caret line="302" column="55" selection-start-line="302" selection-start-column="55" selection-end-line="302" selection-end-column="55" />
+          <folding>
+            <element signature="e#16#51#0" expanded="true" />
+          </folding>
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/doug_server_app/models.py">
+    <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+        <state relative-caret-position="23">
+          <caret line="3" column="48" selection-start-line="3" selection-start-column="48" selection-end-line="3" selection-end-column="48" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#22#31#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2093">
+          <caret line="91" column="5" selection-start-line="91" selection-start-column="5" selection-end-line="91" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doug_server_app/inverted_index.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doug_server/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="116" column="23" selection-start-line="116" selection-start-column="23" selection-end-line="116" selection-end-column="23" />
         </state>
       </provider>
     </entry>
