@@ -18,10 +18,12 @@ django-cors-headers==2.4.0
 django-extensions==2.1.5
 django-phonenumber-field==2.1.0
 djangorestframework==3.9.1
+elasticsearch==7.0.2
 Flask==1.0.2
 google-api-core==1.7.0
 google-auth==1.6.3
 googleapis-common-protos==1.5.8
+gunicorn==19.9.0
 grpcio==1.18.0
 hyperlink==18.0.0
 idna==2.8
@@ -31,14 +33,13 @@ itypes==1.1.0
 Jinja2==2.10
 lxml==4.3.1
 MarkupSafe==1.1.0
-mysqlclient==1.4.2
 nltk==3.4
 numpy==1.16.2
 pandas==0.24.2
 parsel==1.5.1
 phonenumbers==8.10.4
 protobuf==3.6.1
-psycopg2==2.7.7
+psycopg2-binary==2.7.7
 pyasn1==0.4.5
 pyasn1-modules==0.2.4
 pycparser==2.19
@@ -64,4 +65,4 @@ uritemplate==3.0.0
 urllib3==1.24.1
 w3lib==1.20.0
 Werkzeug==0.15.2
-zope.interface==4.6.0
+zope.interface==4.6.0   

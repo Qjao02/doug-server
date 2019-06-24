@@ -14,6 +14,7 @@ import os
 
 #add Google credentials and conect to agent bot on google api services
 os.environ['GOOGLE_APPLICATION_CREDENTIALS']= '../GOOGLE_APPLICATION_CREDENTIALS/key.json'
+os.environ['STATIC_HOST'] = 'http://crc.dcomp.ufsj.edu.br/chatbot2/static/pdfs/'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -68,7 +69,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
     'localhost:4200',
-    '127.0.0.1:9000'
+    '127.0.0.1:9000',
+    '*'
 )
 
 ROOT_URLCONF = 'doug_server.urls'
@@ -107,7 +109,7 @@ DATABASES = {
         'NAME': 'doug_db',
         'USER': 'postgres',
         'PASSWORD': '@.SenhaDoDb1..',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'HOST': 'db',   # Or an IP Address that your DB is hosted on
         'PORT': 5432,
     }
 }
@@ -150,4 +152,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 
-STATIC_URL = '/static/'
+STATIC_URL = '/chatbot2/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

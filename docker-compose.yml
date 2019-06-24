@@ -1,19 +1,134 @@
-version: '3'
+version: '3.7'
 
 services:
-  db:
-    image: mysql
-    ports:
-      - "3307:3307"
   web:
+    container_name: "doug_server"
     build: .
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    container_name: doug_server
+    command: gunicorn doug_server.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - .:/code
+      - .:/usr/src/app/
     ports:
-      - "8765:8765"
+      - 8000
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=foo
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=doug_db
+      - SQL_USER=postgres
+      - SQL_PASSWORD=@.SenhaDoDb1..
+      - SQL_HOST=postgres
+      - SQL_PORT=5432
+      - STATIC_LOCATION=http:crc.dcomp.ufsj.edu.br/static/pdfs/
+    deploy:
+      restart_policy:
+        condition: on-failure
     depends_on:
       - db
+      - elasticsearch
+
+    
+  db:
+    image: postgres:11.2-alpine
+    volumes:
+      - .docker/postgres/data:/var/lib/postgresql/data/
     environment:
-      MYSQL_ROOT_PASSWORD: "@.SenhaDoDb1.."
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=@.SenhaDoDb1..
+      - POSTGRES_DB=doug_db
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch1
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=elasticsearch1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms256M -Xmx256M"
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+      - network.host=_eth0_
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    # privileged: true
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+        reservations:
+          cpus: '1'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 10s
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+      - type: volume
+        source: esdata1
+        target: /usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.0.0
+    container_name: kibana
+    environment:
+      SERVER_NAME: localhost
+      ELASTICSEARCH_URL: http://elasticsearch:9200/
+    ports:
+      - 5601:5601
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+        reservations:
+          cpus: '1'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+        window: 120s
+    depends_on:
+      - elasticsearch
+  nginx:
+    build: docker/nginx/.
+    ports:
+      - 1335:80
+    depends_on:
+      - web
+    volumes:  
+      - ./static:/static
+volumes:
+  esdata1:
+  logs:
+  pgdump:
+

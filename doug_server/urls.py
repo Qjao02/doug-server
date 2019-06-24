@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.authtoken import views
 from rest_framework.documentation import include_docs_urls
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+
 
 
 from .router import router
@@ -30,8 +33,11 @@ urlpatterns = [
 
     #admin routes
 
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('docs/', include_docs_urls(title='dog-api-doc')),
-    path('api-auth/', views.obtain_auth_token, name='auth-token')
+    path('doug/admin/', admin.site.urls),
+    path('doug/api/', include(router.urls)),
+    path('doug/docs/', include_docs_urls(title='doug-api-doc')),
+    path('doug/api-auth/', views.obtain_auth_token, name='auth-token')
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+    
