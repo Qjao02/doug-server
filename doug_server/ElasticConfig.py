@@ -13,18 +13,18 @@ class ElasticConfig():
             simple_phrase = ' ' + parameter
 
         self.body = {"_source": ["*"],
-                                "query": {
-                                    "match_phrase": {
-                                        "content":{
-                                            "query": simple_phrase,
-                                            "slop": 100
-                                        }
-                                    },  
-                                },
-                                "highlight": {
-                                        "fields": {
-                                            "content": {}
-                                        }
-                                    },
-                                "size": 20
+                        "query": {
+                            "match_phrase": {
+                                "content":{
+                                    "query": simple_phrase,
+                                    "slop": 100
+                                }
+                            },  
+                        },
+                        "highlight": {
+                                "fields": {
+                                    "content": {}
+                                }
+                            },
+                        "size": 20
                     }
