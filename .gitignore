@@ -91,3 +91,10 @@ db.sqlite3
 ### OBJ ###
 *.obj
 \.idea/
+
+
+###project folders###
+static/
+pgdump/
+Google_application_credentials/
+.idea/
