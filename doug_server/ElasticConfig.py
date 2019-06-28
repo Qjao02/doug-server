@@ -9,7 +9,7 @@ class ElasticConfig():
 
         # config the search body
 
-        for parameter in parameters['palavra_chave_resolucao']:
+        for parameter in parameters['key_words_dict']:
             simple_phrase = ' ' + parameter
 
         self.body = {"_source": ["*"],
