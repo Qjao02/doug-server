@@ -57,9 +57,9 @@ class ResolutionBehavior(Behavior):
 
         # sort documents by date (most recent)
         #df.sort_values(by='date', ascending=False, inplace=True)
-        for i in df._content.shape[0]:
-            text = df._content.loc[i]
-            if(re.search('SEM EFICÁCIA ', text)):
+        for i in range(df['_source'].shape[0]):
+            text = df['_source'].loc[i]['content']
+            if(re.search('SEM EFICÁCIA', text)):
                 df.drop([i], inplace=True)
         df.reset_index(inplace=True)
 
