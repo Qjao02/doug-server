@@ -29,18 +29,9 @@ class ResolutionBehavior(Behavior):
             self.response = DialogflowResponse(response)
 
         else:
-            candidates = elasticSearch.search(index=elasticSearchConfig.indexName,
-                                              body=elasticSearchConfig.body_second_try)
-
-            if not (candidates['hits']['total']['value'] == 0):
-                df = self.responseRanking(candidates)
-                response = self.formatResponse(df)
-                self.response = DialogflowResponse(response)
-
-            else:
-                self.response = DialogflowResponse(
-                    "infelizmente não encontrei nada, tenta ai uma nova combinação de palavras,"
-                    + " talvez eu tenha mais sorte na proxima")
+            self.response = DialogflowResponse(
+                "infelizmente não encontrei nada, tenta ai uma nova combinação de palavras,"
+                + " talvez eu tenha mais sorte na proxima")
 
 
     def extractDate(self, df):
@@ -48,12 +39,14 @@ class ResolutionBehavior(Behavior):
         list_date = []
         for doc in df._source:
             try:
-                list_date.append(re.search("[0-9]{2}/[0-9]{2}/[0-9]{4}", doc['content']).group())
+                list_date.append(re.search("[0-9]{2}/[0-9]{2}/20[0-9]{2}", doc['content']).group())
             except:
-                list_date.append(re.search("2[0-9]{3}", doc['content']).group())
+                try:
+                    list_date.append(re.search("20[0-9]{2}", doc['content']).group())
+                except:
+                    list_date.append(None)
 
-        df['date'] = list_date
-        df['date'] = pd.to_datetime(df.date)
+        df['date'] = pd.to_datetime(list_date)
 
     def responseRanking(self, candidates):
         # create a dataframe with all candidates
@@ -63,27 +56,31 @@ class ResolutionBehavior(Behavior):
         self.extractDate(df)
 
         # sort documents by date (most recent)
-        df.sort_values(by='date', ascending=False, inplace=True)
+        #df.sort_values(by='date', ascending=False, inplace=True)
         df.reset_index(inplace=True)
 
         return df
 
     def formatResponse(self, df):
-        response = 'Encontrei algo interessante na data de {}: \n\n *"(...)'.format(df.date[0].strftime('%d/%m/%y'))
+        try:
+            response = 'Encontrei algo interessante na data de {}: \n\n *"(...)'.format(df.date[0].strftime('%d/%m/%y'))
+        except:
+            response = 'Encontrei algo interessante, olha só:'
+
         # getting the most recent doctument
         for highlight in df.highlight[0]['content']:
             response += '{}'.format(re.sub(r'\<em>|\</em>|\n', ' ', highlight))
 
         response += '(...)"*\n\n'
 
-        response += 'Você pode acessar este documento por este link *_ {}{} _* \n\n'.format(os.environ['STATIC_HOST'],re.sub(' ', '%20', df['_source'][0]['file']['filename']))
+        response += 'Você pode acessar este documento por este link <{}{}> \n\n'.format(os.environ['STATIC_HOST'],df['_source'][0]['file']['filename'])
         
         if (df['_source'].shape[0] > 1):    
             response += 'caso não seja o que procura, voce pode também acessas esses links: \n'
 
-            for i in range(1, 4):
+            for i in range(1, 6):
                 try:
-                    response += '*_ {}{} _*\n'.format(os.environ['STATIC_HOST'],re.sub(' ', '%20', df['_source'][i]['file']['filename']))
+                    response += '<{}{}>\n'.format(os.environ['STATIC_HOST'], df['_source'][i]['file']['filename'])
                 except:
                     pass
 

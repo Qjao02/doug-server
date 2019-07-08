@@ -97,3 +97,4 @@ db.sqlite3
 static/
 pgdump/
 Google_application_credentials/
+.idea/

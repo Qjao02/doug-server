@@ -117,8 +117,7 @@ services:
         delay: 30s
         max_attempts: 3
         window: 120s
-    depends_on:
-      - elasticsearch
+        
   nginx:
     build: docker/nginx/.
     ports:
