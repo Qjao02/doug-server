@@ -17,7 +17,7 @@ class ElasticConfig():
                             "match_phrase": {
                                 "content":{
                                     "query": simple_phrase,
-                                    "slop": 100
+                                    "slop": 200
                                 }
                             },  
                         },
