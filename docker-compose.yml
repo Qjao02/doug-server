@@ -4,7 +4,7 @@ services:
   web:
     container_name: "doug_server"
     build: .
-    command: python manage.py migrate && gunicorn doug_server.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn doug_server.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/usr/src/app/
     ports:
