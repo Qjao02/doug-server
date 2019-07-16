@@ -14,7 +14,7 @@ import os
 
 #add Google credentials and conect to agent bot on google api services
 os.environ['GOOGLE_APPLICATION_CREDENTIALS']= '../GOOGLE_APPLICATION_CREDENTIALS/key.json'
-os.environ['STATIC_HOST'] = 'http://crc.dcomp.ufsj.edu.br/chatbot2/static/pdfs/'
+os.environ['STATIC_HOST'] = 'http://crc.dcomp.ufsj.edu.br/chatbot3/static/pdfs/'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
