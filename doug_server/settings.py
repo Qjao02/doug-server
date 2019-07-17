@@ -107,10 +107,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'doug_db',
-        'USER': 'postgres',
-        'PASSWORD': '@.SenhaDoDb1..',
-        'HOST': 'db',   # Or an IP Address that your DB is hosted on
-        'PORT': 5432,
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],   # Or an IP Address that your DB is hosted on
+        'PORT': os.environ['DB_PORT'],
     }
 }
 
