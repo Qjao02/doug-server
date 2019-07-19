@@ -55,7 +55,6 @@ class Secretario(Pessoa):
 class Departamento(Setor):
     contato = PhoneNumberField()
     curso = models.ForeignKey(to= Curso, on_delete=None, related_name="departamento", null=True)
-    email = models.EmailField()
 
 class Professor(Pessoa):
     lates = models.URLField()

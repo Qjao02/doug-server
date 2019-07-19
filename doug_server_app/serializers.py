@@ -24,7 +24,16 @@ class SecretarioSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+
+class DepartamentoSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Departamento
+        fields = "__all__"
+
 class ProfessorSerializer(serializers.ModelSerializer):
+    departamento = DepartamentoSerializer(read_only= True )
     validators = [
         UniqueTogetherValidator(
             queryset=Professor.objects.all(),
@@ -32,18 +41,10 @@ class ProfessorSerializer(serializers.ModelSerializer):
         )
     ]
 
+
     class Meta:
         model = Professor
         fields = "__all__"
-
-class DepartamentoSerializer(serializers.ModelSerializer):
-
-    chefe_departamento = ProfessorSerializer()
-    corpo_docente = ProfessorSerializer(many=True)
-
-    class Meta:
-        model = Departamento
-        fields = ('nome', 'contato','chefe_departamento','corpo_docente')
 
 
 class SecretariaSerialzier(serializers.ModelSerializer):

@@ -70,6 +70,7 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
     'localhost:4200',
     '127.0.0.1:9000',
+    'localhost:8080',
     '*'
 )
 

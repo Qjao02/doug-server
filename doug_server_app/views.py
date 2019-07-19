@@ -62,38 +62,10 @@ class UserViewSets(viewsets.ViewSet):
         pass
 
 
-class ProfessoresViewSets(viewsets.ViewSet):
+class ProfessoresViewSets(viewsets.ModelViewSet):
+    queryset = Professor.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
-
-    def list(self, request):
-        queryset = Professor.objects.all()
-        serializer = ProfessorSerializer(queryset, many=True)
-
-        return Response(serializer.data, status.HTTP_200_OK)
-
-    def create(self, request):
-        serializer = ProfessorSerializer(data=request.data)
-        print(serializer.is_valid())
-        print(serializer.errors)
-        if (serializer.is_valid()):
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response({}, status.HTTP_400_BAD_REQUEST)
-
-    def retrieve(self, request, pk=None):
-        queryset = Professor.objects.all()
-        professor = get_object_or_404(queryset, pk=pk)
-        serializer = ProfessorSerializer(professor)
-        return Response(serializer.data, status.HTTP_302_FOUND)
-
-    def update(self, request, pk=None):
-        pass
-
-    def destroy(self, request, pk):
-        queryset = Professor.objects.all()
-        professor = get_object_or_404(queryset, pk=pk)
-        professor.delete()
-        return Response('ok!', status.HTTP_200_OK)
+    serializer_class = ProfessorSerializer
 
 
 # realiza o CRUD de Secretario
