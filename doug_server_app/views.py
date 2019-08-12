@@ -159,6 +159,6 @@ class FulfillmentViewSets(viewsets.ViewSet):
                 'text': behavior.response.dialogflow_response['fulfillmentText']
             }
         }
-        print(behavior.getResponse())
+
         return HttpResponse(behavior.getResponse().get_final_response(), content_type='application/json; charset=utf-8')
 

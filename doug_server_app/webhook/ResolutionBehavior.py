@@ -17,8 +17,8 @@ class ResolutionBehavior(Behavior):
     def toDo(self, parameters, dialogflow_request):
 
         # Create Conection with elasticSearch and config search parameters
-        elasticSearch = Elasticsearch(hosts=[{"host": "elasticsearch"}])
         elasticSearchConfig = ElasticConfig(parameters)
+        elasticSearch = Elasticsearch(hosts= elasticSearchConfig.hosts)
 
         candidates = elasticSearch.search(index=elasticSearchConfig.indexName, body=elasticSearchConfig.body)
 #        print(candidates)

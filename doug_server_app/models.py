@@ -7,13 +7,14 @@ from django.contrib.auth.models import User
 
 
 class Entidade(models.Model):
-    nome = models.CharField(max_length=30)
+    nome = models.CharField(max_length=30, blank= True, null= True)
 
     class Meta:
         abstract = True
 
 class Pessoa(Entidade):
     email = models.EmailField()
+    nome = models.CharField(max_length= 30)
 
     class Meta:
         abstract = True
@@ -57,7 +58,7 @@ class Departamento(Setor):
     curso = models.ForeignKey(to= Curso, on_delete=None, related_name="departamento", null=True)
 
 class Professor(Pessoa):
-    lates = models.URLField()
+    lattes = models.URLField()
     departamento = models.ForeignKey(Departamento, related_name='corpo_docente', on_delete=models.CASCADE, null= True)
     is_chefe_departamento = models.OneToOneField(Departamento,related_name='chefe_departamento', on_delete=None, null= True)
 

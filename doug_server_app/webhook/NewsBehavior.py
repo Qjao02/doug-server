@@ -1,4 +1,5 @@
 from .Behavior import Behavior
+import requests
 
 # for response
 from pydialogflow_fulfillment import DialogflowResponse, DialogflowRequest, SimpleResponse, Suggestions

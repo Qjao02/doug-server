@@ -71,7 +71,6 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:4200',
     '127.0.0.1:9000',
     'localhost:8080',
-    '*'
 )
 
 ROOT_URLCONF = 'doug_server.urls'
@@ -155,3 +154,4 @@ USE_TZ = True
 
 STATIC_URL = '/chatbot3/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+

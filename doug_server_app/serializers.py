@@ -23,6 +23,13 @@ class SecretarioSerializer(serializers.ModelSerializer):
         model = Secretario
         fields = "__all__"
 
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        print(instance)
+        print(ret)
+        ret['secretaria'] = SecretariaSerialzier(instance.secretaria).data
+        return ret 
+
 
 
 class DepartamentoSerializer(serializers.ModelSerializer):
@@ -34,7 +41,7 @@ class ProfessorSerializer(serializers.ModelSerializer):
     validators = [
         UniqueTogetherValidator(
             queryset=Professor.objects.all(),
-            fields=('email', 'lates')
+            fields=('email', 'lattes')
         )
     ]
 
@@ -53,7 +60,6 @@ class ProfessorSerializer(serializers.ModelSerializer):
 
 
 class SecretariaSerialzier(serializers.ModelSerializer):
-    secretario = SecretarioSerializer(many=True, read_only=True)
 
     validators = [
         UniqueTogetherValidator(
@@ -64,14 +70,21 @@ class SecretariaSerialzier(serializers.ModelSerializer):
 
     class Meta:
         model = Secretaria
-        fields = ('email', 'telefone', 'secretario', 'curso')
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        print(instance)
+        print(ret)
+        ret['curso'] = CursoSerializer(instance.curso).data
+        return ret 
+    
 
 
 class CursoSerializer(serializers.ModelSerializer):
-
     class Meta:
         model= Curso
-        fields= ['nome']
+        fields= '__all__'
 
 class BoletimSerializer(serializers.ModelSerializer):
 

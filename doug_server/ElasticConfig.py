@@ -2,6 +2,10 @@ class ElasticConfig():
     indexName = None
     body = None
     body_second_try = None
+    hosts = [{
+        'host': 'localhost',
+        'port' : 9200
+    }]
 
     def __init__(self, parameters):
         # config the index name for search
