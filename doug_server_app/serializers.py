@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework import  serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+import datetime
+
 from .models import *
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -87,26 +89,24 @@ class CursoSerializer(serializers.ModelSerializer):
         fields= '__all__'
 
 class BoletimSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Boletim
         fields= ('data', 'numero')
 
 class NoticiaSerializer(serializers.ModelSerializer):
-
     class Meta:
         model= Noticia
         fields= ['titulo', 'corpo', 'boletim_fk', 'disponivel_em']
 
 
 
+class EventoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Evento
+        fields = '__all__'
 
 
-
-
-
-
-
+    
 
 
 

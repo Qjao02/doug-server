@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 #add Google credentials and conect to agent bot on google api services
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']= '../GOOGLE_APPLICATION_CREDENTIALS/key.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']= '../GOOGLE_APPLICATION_CREDENTIALS/client_secret_73248095682-89208hhffrhv8kpd29pei5l817i4iebh.apps.googleusercontent.com.json'
+os.environ['PROJECT_ID'] = 'dougbot-fkqtig'
 os.environ['STATIC_HOST'] = 'http://crc.dcomp.ufsj.edu.br/chatbot2/static/pdfs/'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -113,6 +114,7 @@ DATABASES = {
         'PORT': os.environ['DB_PORT'],
     }
 }
+
 
 
 # Password validation

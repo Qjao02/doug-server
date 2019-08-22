@@ -23,6 +23,7 @@ import json
 import requests
 from datetime import datetime
 from pydialogflow_fulfillment import DialogflowResponse, DialogflowRequest, SimpleResponse, Suggestions
+from elasticsearch import Elasticsearch
 
 
 #webhook impors
@@ -101,6 +102,12 @@ class BoletimViewSets(viewsets.ModelViewSet):
     queryset = Boletim.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
     serializer_class = BoletimSerializer
+
+
+class EventoViewSets(viewsets.ModelViewSet):
+    queryset = Evento.objects.all()
+    permission_classes = (IsAuthenticated, IsAdminUser)
+    serializer_class = EventoSerializer
 
 
 '''

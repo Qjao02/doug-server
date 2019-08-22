@@ -1,7 +1,24 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+# custom imports
+import datetime
+from elasticsearch import Elasticsearch
+from doug_server.ElasticConfig import ElasticConfig
+import spacy
+from spacy import displacy
+from collections import Counter
+import pt_core_news_sm
+
+import dialogflow_v2
+
+
 # Create your models here.
+
+
 
 
 
@@ -93,4 +110,79 @@ class Noticia(Documento):
     corpo = models.TextField()
     boletim_fk = models.ForeignKey(on_delete= models.SET_NULL, to= Boletim, null= True)
 
+class Evento(Entidade):
+    assunto = models.TextField()
+    data_criado = models.DateTimeField(editable= False)
+    data_evento = models.DateField()
 
+    def save(self, *args, **kwargs):
+        self.data_criado = datetime.datetime.now()   
+        object = super(Evento, self).save(*args, **kwargs)
+
+     
+       
+'''
+    @receivers
+'''
+
+# Indexa o novo evento no momento em que um evento é criado no Banco de Dados
+@receiver(post_save, sender=Evento, dispatch_uid="evento criado")
+def insertEventoElasticSearch(sender, instance, created, **kwargs):
+    es_config = ElasticConfig()
+    es = Elasticsearch(hosts=es_config.hosts)
+
+    newInstance = {
+        'assunto': instance.assunto,
+        'data_criado': instance.data_criado,
+        'data_evento': instance.data_evento
+    }
+    res = es.index(index=es_config.getEventoIndex(), doc_type='evento', id= instance.id, body= newInstance)
+
+@receiver(post_save, sender= Evento, dispatch_uid="evento criado")
+def updateEventoKeyWordEntities(sender, instance, created, **kwargs):
+    assunto = instance.assunto
+
+    # instancia o modelo de nlp
+    nlp = pt_core_news_sm.load()
+    doc = nlp(assunto)
+
+    # Separação de tokens
+    tokens = [token for token in doc if not token.is_stop]
+
+    # Requisição do dialogflow para obter as entities
+    client = dialogflow_v2.EntityTypesClient()
+    parent = client.project_agent_path(project_id)
+    list_entity_types_response = list(client.list_entity_types(parent))
+
+    # cria uma nova instância com as novas entities processadas
+    list_entity_types_response = list(client.list_entity_types(parent))
+
+    entries = []
+    entity = {}
+    for token in tokens:
+        try:
+            entity[token.lemma_].append(token.text)
+        except:
+            entity[token.lemma_] = []
+            entity[token.lemma_].append(token.text)
+
+    for k, v in entity.items():
+        entries.append({
+            "value": k,
+            "synonyms": v
+        })  
+        
+    eventos = {
+        'display_name': 'eventos',
+        'entities': entries,
+    }
+
+    eventos['name'] = entity_type.name
+    eventos['display_name'] = entity_type.display_name
+    eventos['kind'] = entity_type.kind
+
+
+    #realiza o submit das entities ao dialogflow
+    response = client.update_entity_type(eventos)
+
+    
