@@ -12,16 +12,18 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-#add Google credentials and conect to agent bot on google api services
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']= '../GOOGLE_APPLICATION_CREDENTIALS/client_secret_73248095682-89208hhffrhv8kpd29pei5l817i4iebh.apps.googleusercontent.com.json'
-os.environ['PROJECT_ID'] = 'dougbot-fkqtig'
-os.environ['STATIC_HOST'] = 'http://crc.dcomp.ufsj.edu.br/chatbot2/static/pdfs/'
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+
+#add Google credentials and conect to agent bot on google api services
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']= 'Google_Application_Credentials/dougbot-42b28547ffda.json'
+os.environ['PROJECT_ID'] = 'dougbot-fkqtig'
+os.environ['STATIC_HOST'] = 'http://crc.dcomp.ufsj.edu.br/chatbot2/static/pdfs/'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'y23s$0f=z_@$kt*$!no*h@26g4bgo6vi9twf74))^q&x2^1wzn'

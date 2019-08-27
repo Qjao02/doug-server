@@ -15,6 +15,9 @@ import pt_core_news_sm
 
 import dialogflow_v2
 
+# os imports
+import os
+
 
 # Create your models here.
 
@@ -113,7 +116,7 @@ class Noticia(Documento):
 class Evento(Entidade):
     assunto = models.TextField()
     data_criado = models.DateTimeField(editable= False)
-    data_evento = models.DateField()
+    data_evento = models.DateTimeField()
 
     def save(self, *args, **kwargs):
         self.data_criado = datetime.datetime.now()   
@@ -138,8 +141,9 @@ def insertEventoElasticSearch(sender, instance, created, **kwargs):
     }
     res = es.index(index=es_config.getEventoIndex(), doc_type='evento', id= instance.id, body= newInstance)
 
-@receiver(post_save, sender= Evento, dispatch_uid="evento criado")
+@receiver(post_save, sender= Evento)
 def updateEventoKeyWordEntities(sender, instance, created, **kwargs):
+    
     assunto = instance.assunto
 
     # instancia o modelo de nlp
@@ -147,15 +151,18 @@ def updateEventoKeyWordEntities(sender, instance, created, **kwargs):
     doc = nlp(assunto)
 
     # Separação de tokens
-    tokens = [token for token in doc if not token.is_stop]
+    tokens = pre_processing(doc)
+    
+
 
     # Requisição do dialogflow para obter as entities
     client = dialogflow_v2.EntityTypesClient()
-    parent = client.project_agent_path(project_id)
+    parent = client.project_agent_path(os.environ['PROJECT_ID'])
     list_entity_types_response = list(client.list_entity_types(parent))
 
     # cria uma nova instância com as novas entities processadas
     list_entity_types_response = list(client.list_entity_types(parent))
+    entity_type = list_entity_types_response[2]
 
     entries = []
     entity = {}
@@ -185,4 +192,6 @@ def updateEventoKeyWordEntities(sender, instance, created, **kwargs):
     #realiza o submit das entities ao dialogflow
     response = client.update_entity_type(eventos)
 
-    
+def pre_processing(doc):
+    tokens = [token for token in doc if not token.is_stop]
+    return tokens
