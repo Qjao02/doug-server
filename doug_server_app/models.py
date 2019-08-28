@@ -139,7 +139,9 @@ def insertEventoElasticSearch(sender, instance, created, **kwargs):
         'data_criado': instance.data_criado,
         'data_evento': instance.data_evento
     }
+
     res = es.index(index=es_config.getEventoIndex(), doc_type='evento', id= instance.id, body= newInstance)
+    print(res)
 
 @receiver(post_save, sender= Evento)
 def updateEventoKeyWordEntities(sender, instance, created, **kwargs):
@@ -154,7 +156,6 @@ def updateEventoKeyWordEntities(sender, instance, created, **kwargs):
     tokens = pre_processing(doc)
     
 
-
     # Requisição do dialogflow para obter as entities
     client = dialogflow_v2.EntityTypesClient()
     parent = client.project_agent_path(os.environ['PROJECT_ID'])
@@ -165,33 +166,41 @@ def updateEventoKeyWordEntities(sender, instance, created, **kwargs):
     entity_type = list_entity_types_response[2]
 
     entries = []
-    entity = {}
+    entities = list(entity_type.entities)
+    
     for token in tokens:
-        try:
-            entity[token.lemma_].append(token.text)
-        except:
-            entity[token.lemma_] = []
-            entity[token.lemma_].append(token.text)
+        entities.append({'value': token.lemma_, 'synonyms': [token.text]})
 
-    for k, v in entity.items():
-        entries.append({
-            "value": k,
-            "synonyms": v
-        })  
-        
-    eventos = {
-        'display_name': 'eventos',
-        'entities': entries,
-    }
-
-    eventos['name'] = entity_type.name
-    eventos['display_name'] = entity_type.display_name
-    eventos['kind'] = entity_type.kind
 
 
     #realiza o submit das entities ao dialogflow
-    response = client.update_entity_type(eventos)
+    response = client.batch_update_entities(entity_type.name, entities)
+    response.done()
+
+    # treina o modelo do
+    client = dialogflow_v2.AgentsClient()
+    project_parent = client.project_path(os.environ['PROJECT_ID'])
+
+    client.train_agent(project_parent)
 
 def pre_processing(doc):
     tokens = [token for token in doc if not token.is_stop]
     return tokens
+
+# chega se o termo ja foi indexado
+def checkTermIndexed(tokens):
+    es_config = ElasticConfig()
+
+    tokens_result = []
+    for token in tokens:
+        queryBody = es_config.getCheckEventValue(token)
+        response = es.search(index= t, body= evento_query_term)
+        
+        if(response != 1):
+            tokens_result.append(token)
+    
+    return tokens_result
+        
+
+
+

@@ -45,3 +45,15 @@ class ElasticConfig():
     def getEventosQuery(self):
         eventoQuery = {}
         return eventoQuery
+
+    def getCheckEventValue(self, term):
+        query = {
+            "query" : {
+                "terms" : {
+                    "synonyms" : term
+                }
+            }
+        }
+        
+        return query
+
