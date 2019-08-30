@@ -187,19 +187,7 @@ def pre_processing(doc):
     tokens = [token for token in doc if not token.is_stop]
     return tokens
 
-# chega se o termo ja foi indexado
-def checkTermIndexed(tokens):
-    es_config = ElasticConfig()
 
-    tokens_result = []
-    for token in tokens:
-        queryBody = es_config.getCheckEventValue(token)
-        response = es.search(index= t, body= evento_query_term)
-        
-        if(response != 1):
-            tokens_result.append(token)
-    
-    return tokens_result
         
 
 

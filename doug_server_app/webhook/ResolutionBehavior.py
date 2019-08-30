@@ -20,7 +20,7 @@ class ResolutionBehavior(Behavior):
         elasticSearchConfig = ElasticConfig()
         elasticSearch = Elasticsearch(hosts= elasticSearchConfig.hosts)
 
-        candidates = elasticSearch.search(index=elasticSearchConfig.getResolucaoIndex, body=elasticSearchConfig.getResolutionQuery(parameters))
+        candidates = elasticSearch.search(index=elasticSearchConfig.getResolutionIndex(), body= elasticSearchConfig.getResolutionQuery(parameters))
 #        print(candidates)
 
         if not (candidates['hits']['total']['value'] == 0):

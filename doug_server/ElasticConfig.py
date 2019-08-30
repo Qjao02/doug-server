@@ -11,13 +11,13 @@ class ElasticConfig():
 
         # config the search body
 
-    def getResolucaoIndex(self):
+    def getResolutionIndex(self):
         return self.resolucaoIndex
     
     def getEventoIndex(self):
         return self.eventoIndex
 
-    def getResolucaoQUery(self, parameters):
+    def getResolutionQuery(self, parameters):
         
         for parameter in parameters['key_words_dict']:
             simple_phrase = ' ' + parameter
@@ -42,9 +42,38 @@ class ElasticConfig():
         return resolutionQuery
 
 
-    def getEventosQuery(self):
-        eventoQuery = {}
-        return eventoQuery
+    def getEventQuery(self, params):
+
+        queryTerms = []
+        for param in params['eventos']:
+            print(param)
+            queryTerms.append({
+                'match': {
+                    'assunto': param
+                },
+            })
+        
+        print('bla')
+        print(queryTerms)
+        
+        eventQuery = {
+            "_source": "*",
+            "query": {
+            "bool": {
+                "must": queryTerms,
+                "filter": [{
+                        "range": {
+                            "data_evento": {
+                                "gt": "now"
+                            }
+                            
+                        }
+                    }]
+                }
+            }
+        }
+        
+        return eventQuery
 
     def getCheckEventValue(self, term):
         query = {

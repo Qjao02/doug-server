@@ -77,3 +77,7 @@ w3lib==1.20.0
 wasabi==0.2.2
 Werkzeug==0.15.2
 zope.interface==4.6.0
+
+  Downloading https://files.pythonhosted.org/packages/e4/af/d9175f2b40a9bcd700db2861610d6ed48c2795ffba46c1d6abf25f7c1dea/django_dotenv-1.4.2-py2.py3-none-any.whl
+Installing collected packages: django-dotenv
+Successfully installed django-dotenv-1.4.2

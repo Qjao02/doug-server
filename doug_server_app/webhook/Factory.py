@@ -2,12 +2,12 @@ from .NewsBehavior import NewsBehavior
 from .ReportBehavior import ReportBehavior
 from .ReportBehaviorNews import ReportBehaviorNews
 from .ResolutionBehavior import ResolutionBehavior
-
-class BehaviorFactory:
-    def getBeahavior(self): pass
+from .EventSubjectBehavior import EventSubjectBehavior
 
 
-class BehaviorFactory(BehaviorFactory):
+
+
+class BehaviorFactory():
 
     def getReportBehavior(self):
         return ReportBehavior()
@@ -20,6 +20,9 @@ class BehaviorFactory(BehaviorFactory):
 
     def getResolutionBehavior(self):
         return ResolutionBehavior()
+
+    def getEventSubjectBehavior(self):
+        return EventSubjectBehavior()
 
 
 class Factory:
@@ -37,6 +40,9 @@ class Factory:
 
         elif (usersIntent == 'resolucao'):
             object = BehaviorFactory().getResolutionBehavior()
+        
+        elif(usersIntent == 'Eventos'):
+            object = BehaviorFactory().getEventSubjectBehavior()
 
         return object
 
