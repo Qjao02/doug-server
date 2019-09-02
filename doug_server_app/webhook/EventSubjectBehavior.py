@@ -5,6 +5,8 @@ from doug_server.ElasticConfig import ElasticConfig
 
 from pydialogflow_fulfillment import DialogflowResponse, DialogflowRequest, SimpleResponse, Suggestions
 
+import datetime
+
 
 class EventSubjectBehavior(Behavior):
 
@@ -30,12 +32,12 @@ class EventSubjectBehavior(Behavior):
         if not events:
             return 'Não encontrei nenhum evento com essas palavras'
 
-        response = 'Opa achei isso aqui \n'
+        response = 'Opa, achei isso aqui \n'
         for event in events:
-            response += 'na data {} :'.format(event['_source']['data_evento'])
-            response += '"{}" \n'.format(event['_source']['assunto'])
+            response += 'na data {} :\n'.format(datetime.datetime.strptime(event['_source']['data_evento'][:10],"%Y-%m-%d").strftime("%d-%m-%Y"))
+            response += '"{}" \n\n'.format(event['_source']['assunto'])
 
-                
+            
         return response
 
 

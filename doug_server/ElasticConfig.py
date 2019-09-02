@@ -64,7 +64,7 @@ class ElasticConfig():
                 "filter": [{
                         "range": {
                             "data_evento": {
-                                "gt": "now"
+                                "gt": "now-d"
                             }
                             
                         }
