@@ -14,7 +14,7 @@ router.register('secretarios', SecretarioViewSets, base_name='secretario')
 router.register('departamentos', DepartamentoViewSets, base_name='departamento')
 router.register('secretarias', SecretariaViewSets, base_name='secretaria')
 router.register('cursos', CursoViewSets, base_name='curso')
-router.register('doug', botViewSets, base_name='doug')
+router.register('bot', botViewSets, base_name='doug')
 router.register('eventos', EventoViewSets, base_name='evento')
 
 router.register('boletins', BoletimViewSets, base_name='boletim')

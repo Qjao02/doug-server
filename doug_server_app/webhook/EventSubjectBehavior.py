@@ -30,7 +30,7 @@ class EventSubjectBehavior(Behavior):
 
     def formatNewsResponse(self, events):
         if not events:
-            return 'Não encontrei nenhum evento com essas palavras'
+            return 'Não existem eventos com esses dados cadastrados'
 
         response = 'Opa, achei isso aqui \n'
         for event in events:

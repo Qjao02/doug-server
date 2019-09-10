@@ -113,13 +113,28 @@ class Noticia(Documento):
     corpo = models.TextField()
     boletim_fk = models.ForeignKey(on_delete= models.SET_NULL, to= Boletim, null= True)
 
-class Evento(Entidade):
+class Evento(models.Model):
     assunto = models.TextField()
     data_criado = models.DateTimeField(editable= False)
     data_evento = models.DateTimeField()
+    periodo = models.CharField(max_length= 7, null= True, blank= True)
 
     def save(self, *args, **kwargs):
-        self.data_criado = datetime.datetime.now()   
+        self.data_criado = datetime.datetime.now()
+        
+        # extração do periodo da data fornecida
+        data_evento = self.data_evento
+
+        periodo = ''
+
+        if(data_evento.month < 8):
+            periodo = '01/'
+        else:
+            periodo = '02/'
+        
+        periodo += str(data_evento.year)
+
+        self.periodo = periodo
         object = super(Evento, self).save(*args, **kwargs)
 
      
@@ -137,7 +152,8 @@ def insertEventoElasticSearch(sender, instance, created, **kwargs):
     newInstance = {
         'assunto': instance.assunto,
         'data_criado': instance.data_criado,
-        'data_evento': instance.data_evento
+        'data_evento': instance.data_evento,
+        'periodo': instance.periodo
     }
 
     res = es.index(index=es_config.getEventoIndex(), doc_type='evento', id= instance.id, body= newInstance)

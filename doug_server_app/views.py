@@ -17,19 +17,25 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework import viewsets
+import re
 
 # other imports
 import json
 import requests
 from datetime import datetime
 from pydialogflow_fulfillment import DialogflowResponse, DialogflowRequest, SimpleResponse, Suggestions
+from google.protobuf.json_format import MessageToDict
+
 from elasticsearch import Elasticsearch
+import os
 
 
 #webhook impors
 from .webhook.Factory import Factory
 # ml imports
 import pickle
+
+
 
 # Create your views here.
 
@@ -122,7 +128,7 @@ class botViewSets(viewsets.ViewSet):
         pass
 
     def create(self, request):
-        project_id = 'doug-bot-10f69'
+        project_id = os.environ['PROJECT_ID']
 
         if not request.session.exists(request.session.session_key):
             request.session.create()
@@ -130,10 +136,8 @@ class botViewSets(viewsets.ViewSet):
         session_client = dialogflow.SessionsClient()
         session_id = request.session.session_key
         session = session_client.session_path(project_id, session_id)
-        print('Session path: {}\n'.format(session))
 
         message = request.data['message']
-        print('message is {}'.format(message))
 
         text_input = dialogflow.types.TextInput(
             text=message, language_code='pt-BR')
@@ -143,7 +147,22 @@ class botViewSets(viewsets.ViewSet):
         response = session_client.detect_intent(
             session=session, query_input=query_input)
 
-        return Response({'message': response.query_result.fulfillment_text}, status.HTTP_200_OK)
+        query_result = MessageToDict(response.query_result)
+        
+        query_result.pop('webhookPayload', None)
+
+        fulfillmentMessages = []
+        for element in query_result['fulfillmentMessages']:
+
+            aux = element['text']['text'][0].split('\n')
+            aux = [x for x in aux if len(x) > 0]            
+            fulfillmentMessages = [{'text': {'text':[x] }} for x in aux]
+
+        query_result['fulfillmentMessages'] = fulfillmentMessages
+            
+
+
+        return Response({'queryResult' : query_result}, status.HTTP_200_OK)
 
 
 class FulfillmentViewSets(viewsets.ViewSet):
@@ -155,17 +174,22 @@ class FulfillmentViewSets(viewsets.ViewSet):
         usersIntent = queryResult['intent']['displayName']
         parameters = queryResult['parameters']
 
-        print(usersIntent)
-        print(parameters)
+
 
         behavior = Factory.getBehavior(usersIntent)
         behavior.toDo(parameters, dialogflow_request)
+        
         behavior.response.response_payload = {
             'slack': {
                 'attachments': ["cards"],
                 'text': behavior.response.dialogflow_response['fulfillmentText']
+            },
+            'google': {
+                'attachments': ["cards"],
+                'text': behavior.response.dialogflow_response['fulfillmentText']
             }
         }
+
 
         return HttpResponse(behavior.getResponse().get_final_response(), content_type='application/json; charset=utf-8')
 

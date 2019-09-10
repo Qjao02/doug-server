@@ -84,7 +84,7 @@ class ResolutionBehavior(Behavior):
 
             for i in range(1, 6):
                 try:
-                    response += '<{}{}>\n'.format(os.environ['STATIC_HOST'], df['_source'][i]['file']['filename'])
+                    response += '{}{}\n'.format(os.environ['STATIC_HOST'], df['_source'][i]['file']['filename'])
                 except:
                     pass
 

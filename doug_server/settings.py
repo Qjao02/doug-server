@@ -74,6 +74,8 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:4200',
     '127.0.0.1:9000',
     'localhost:8080',
+    'localhost:8081',
+    'localhost:8082',
 )
 
 ROOT_URLCONF = 'doug_server.urls'
