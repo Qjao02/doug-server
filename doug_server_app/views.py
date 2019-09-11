@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework import viewsets
 import re
+import ast
 
 # other imports
 import json
@@ -148,21 +149,32 @@ class botViewSets(viewsets.ViewSet):
             session=session, query_input=query_input)
 
         query_result = MessageToDict(response.query_result)
+        #print(query_result.keys())
+        #print(query_result['webhookPayload'])
         
-        query_result.pop('webhookPayload', None)
+        print(query_result)
 
+        query_result = self.split_message_to_client(query_result)
+        return Response({'queryResult' : query_result}, status.HTTP_200_OK)
+
+        
+    def split_message_to_client(self, query_result):
         fulfillmentMessages = []
-        for element in query_result['fulfillmentMessages']:
 
-            aux = element['text']['text'][0].split('\n')
+        for element in query_result['fulfillmentMessages']:
+            try:
+                aux = element['text']['text'][0].split('\n')
+            except:
+                return query_result
             aux = [x for x in aux if len(x) > 0]            
             fulfillmentMessages = [{'text': {'text':[x] }} for x in aux]
 
         query_result['fulfillmentMessages'] = fulfillmentMessages
             
+    
 
+        return query_result
 
-        return Response({'queryResult' : query_result}, status.HTTP_200_OK)
 
 
 class FulfillmentViewSets(viewsets.ViewSet):
@@ -184,12 +196,20 @@ class FulfillmentViewSets(viewsets.ViewSet):
                 'attachments': ["cards"],
                 'text': behavior.response.dialogflow_response['fulfillmentText']
             },
-            'google': {
-                'attachments': ["cards"],
-                'text': behavior.response.dialogflow_response['fulfillmentText']
-            }
         }
 
+        responseStr = behavior.getResponse().get_final_response()
 
-        return HttpResponse(behavior.getResponse().get_final_response(), content_type='application/json; charset=utf-8')
+        response = ast.literal_eval(responseStr)
+
+
+        response['payload'].pop('google', None)
+
+        #print(response)
+        
+
+
+
+
+        return HttpResponse(json.dumps(response), content_type='application/json; charset=utf-8')
 

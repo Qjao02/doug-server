@@ -77,7 +77,7 @@ class ResolutionBehavior(Behavior):
 
         response += '(...)"*\n\n'
 
-        response += 'Você pode acessar este documento por este link <{}{}> \n\n'.format(os.environ['STATIC_HOST'],df['_source'][0]['file']['filename'])
+        response += 'Você pode acessar este documento por este link abaixo:\n{}{} \n\n'.format(os.environ['STATIC_HOST'],df['_source'][0]['file']['filename'])
         
         if (df['_source'].shape[0] > 1):    
             response += 'caso não seja o que procura, voce pode também acessas esses links: \n'
