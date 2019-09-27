@@ -187,7 +187,7 @@ class FulfillmentViewSets(viewsets.ViewSet):
         parameters = queryResult['parameters']
 
 
-
+        print(parameters)
         behavior = Factory.getBehavior(usersIntent)
         behavior.toDo(parameters, dialogflow_request)
         

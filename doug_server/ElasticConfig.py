@@ -42,9 +42,11 @@ class ElasticConfig():
         return resolutionQuery
 
 
-    def getEventQuery(self, params):
+    def getEventQuery(self, params, time):
 
         queryTerms = []
+        
+        # add params to elasticsearch json query
         for param in params['eventos']:
             print(param)
             queryTerms.append({
@@ -53,21 +55,28 @@ class ElasticConfig():
                 },
             })
         
-        print('bla')
-        print(queryTerms)
-        
+        # select the time for query, it can be past or future
+        if time == 'future':
+            event_date = {
+                'data_evento': {
+                    'gt': 'now-d'
+                }
+            }
+        elif time == 'past':
+            event_date = {
+                'data_evento': {
+                    'lte': 'now-d'
+                }
+            }
+
+
         eventQuery = {
             "_source": "*",
             "query": {
             "bool": {
                 "must": queryTerms,
                 "filter": [{
-                        "range": {
-                            "data_evento": {
-                                "gt": "now-d"
-                            }
-                            
-                        }
+                        "range": event_date
                     }]
                 }
             }
